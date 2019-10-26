@@ -10,7 +10,7 @@ var up_pressed = false
 var down_pressed = false
 var player_controller_id
 
-var player_speed = 30
+var player_speed = 60
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

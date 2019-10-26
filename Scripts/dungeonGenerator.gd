@@ -19,9 +19,15 @@ var spreadFactor = 0.1
 var rng = RandomNumberGenerator.new()
 var path = AStar.new()
 
+var player_spawn = Vector2()
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
+
+func get_player_spawn():
+	return player_spawn
+
 
 # Genererar tilemapen
 func generate():
@@ -58,7 +64,7 @@ func generate():
 	createCorridor(15, 18, 0, 6, tileMap)
 	
 	createMonsters(tileMap)
-	createPlayerSpawns(1, 1, 4, 1, tileMap)
+	createPlayerSpawns(16, 16, tileMap)
 
 #	var rooms = generateRoomSizes() # genererar tight packade rum
 #	roomSeparation(rooms) # sprider ut rummen
@@ -105,15 +111,15 @@ func createMonsters(trg):
 			spawner.name = "enemySpawner %s" % cell
 			spawner.position = cell * 8
 			trg.add_child(spawner)
-func createPlayerSpawns(x1, y1, x2, y2, trg):
+func createPlayerSpawns(x1, y1, trg):
 	var spawn1 = Node2D.new()
-	var spawn2 = Node2D.new()
-	spawn1.name = "player1Spawn"
+	
+	spawn1.add_to_group("spawners")
+	
+	spawn1.name = "playerSpawn"
 	spawn1.position = Vector2(x1, y1)
-	spawn2.name = "player2Spawn"
-	spawn2.position = Vector2(x2, y2)
+	player_spawn = Vector2(x1, y1)
 	trg.add_child(spawn1)
-	trg.add_child(spawn2)
 	
 func createMST(rooms):
 	# ta reda på minimala spännande träd 

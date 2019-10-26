@@ -8,6 +8,7 @@ extends Node2D
 var players = []
 var player_1
 var player_2
+var map_node
 
 var spawn = Vector2(40,40)
 # Called when the node enters the scene tree for the first time.
@@ -16,13 +17,15 @@ func _ready():
 	player_2 = $Player2
 	players.append(player_1)
 	players.append(player_2)
-	spawn_players()
+	map_node = $map
+	map_node.generateDungeon()
+	var generator_node = map_node.get_node("./dungeonGenerator")
+	spawn_players(generator_node.get_player_spawn())
 	pass # Replace with function body.
 
-func spawn_players():
-
-	player_1.position = spawn
-	player_2.position = Vector2(spawn.x + 5, spawn.y +5)
+func spawn_players(spawn):
+	player_1.position = spawn + Vector2(4, 4)
+	player_2.position = Vector2(spawn.x + 12, spawn.y + 4)
 	player_1.player_controller_id = 0
 	player_2.player_controller_id = 1
 
