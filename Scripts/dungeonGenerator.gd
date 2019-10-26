@@ -58,6 +58,7 @@ func generate():
 	createCorridor(15, 18, 0, 6, tileMap)
 	
 	createMonsters(tileMap)
+	createPlayerSpawns(1, 1, 4, 1, tileMap)
 
 #	var rooms = generateRoomSizes() # genererar tight packade rum
 #	roomSeparation(rooms) # sprider ut rummen
@@ -104,7 +105,16 @@ func createMonsters(trg):
 			spawner.name = "enemySpawner %s" % cell
 			spawner.position = cell * 8
 			trg.add_child(spawner)
-
+func createPlayerSpawns(x1, y1, x2, y2, trg):
+	var spawn1 = Node2D.new()
+	var spawn2 = Node2D.new()
+	spawn1.name = "player1Spawn"
+	spawn1.position = Vector2(x1, y1)
+	spawn2.name = "player2Spawn"
+	spawn2.position = Vector2(x2, y2)
+	trg.add_child(spawn1)
+	trg.add_child(spawn2)
+	
 func createMST(rooms):
 	# ta reda på minimala spännande träd 
 	# Prims Algorithm
