@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Resources/dungeonTilemap.png" type="Texture" id=1]
 
-[sub_resource type="NavigationPolygon" id=1]
+[sub_resource type="NavigationPolygon" id=3]
 vertices = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 polygons = [ PoolIntArray( 0, 1, 2, 3 ) ]
 
@@ -18,6 +18,7 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 0/tile_mode = 0
 0/occluder_offset = Vector2( 0, 0 )
 0/navigation_offset = Vector2( 0, 0 )
+0/navigation = SubResource( 3 )
 0/shapes = [  ]
 0/z_index = 0
 1/name = "dungeonTilemap.png 1"
@@ -28,7 +29,6 @@ points = PoolVector2Array( 0, 0, 8, 0, 8, 8, 0, 8 )
 1/tile_mode = 0
 1/occluder_offset = Vector2( 0, 0 )
 1/navigation_offset = Vector2( 0, 0 )
-1/navigation = SubResource( 1 )
 1/shapes = [ {
 "autotile_coord": Vector2( 0, 0 ),
 "one_way": false,

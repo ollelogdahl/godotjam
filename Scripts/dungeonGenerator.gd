@@ -9,6 +9,8 @@ onready var enemySpawner = preload("res://Scenes/enemySpawner.tscn")
 var dungeonRoom = preload("res://Scripts/dungeonRoomClass.gd")
 onready var parent = get_parent()
 
+onready var navigation2D = $'/root/Node/world/Navigation2D'
+
 var roomCount = 44
 var iterations = 300
 var roomMean = 11
@@ -41,7 +43,7 @@ func generate():
 	tileMap.name = "floor_%X" % mapSeed
 	
 	#parent.call_deferred("add_child", tileMap) # temporär
-	parent.add_child(tileMap)
+	navigation2D.add_child(tileMap)
 	
 	# sätter värden på tileMap
 	tileMap.cell_size = Vector2(8, 8)
@@ -65,6 +67,8 @@ func generate():
 	
 	createMonsters(tileMap)
 	createPlayerSpawns(16, 16, tileMap)
+	
+	
 
 #	var rooms = generateRoomSizes() # genererar tight packade rum
 #	roomSeparation(rooms) # sprider ut rummen
@@ -77,6 +81,8 @@ func generate():
 #
 #	# bygger korridorer som kopplar samman rummen enligt trädet
 #	generateCorridors(graph)
+
+	print("Dungeon " + tileMap.name + " created!")
 	
 func createRoom(x, y, w, h, trg):
 	# skapa väggar
