@@ -4,9 +4,19 @@ extends Node
 # var a = 2
 # var b = "text"
 
-# temporär lösning
 onready var dungeonTilesetRes = preload("res://ResourceObjects/dungeonTileset.tres")
 onready var parent = get_parent()
+
+var dungeonRoom = preload("res://Scripts/dungeonRoomClass.gd")
+
+var dungeonSize = 100
+var roomCount = 12
+
+var initialSize = 40
+var roomMean = 8
+var roomStdev = 4
+
+var rng = RandomNumberGenerator.new()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,7 +30,9 @@ func _ready():
 # Genererar tilemapen
 func generate():
 	# generera seed
-	var mapSeed = randi()
+	rng.randomize()
+	var mapSeed = rng.randi()
+	rng.seed = mapSeed
 	
 	# Skapa en ny node TileMap för denna dungeon
 	var tileMap = TileMap.new()
@@ -35,9 +47,39 @@ func generate():
 	print("Dungeon " + tileMap.name + " init..")
 
 	# börja generera dungeon
+	
+	# exempel
 	createRoom(0, 0, 10, 10, tileMap)
 	createRoom(12, 4, 7, 11, tileMap)
+	createRoom(13, -4, 9, 5, tileMap)
 	createCorridor(10, 8, 0, 3, tileMap)
+	createCorridor(15, 4, 1, 4, tileMap)
+	
+	# generera rum
+	var rooms = []
+	#for i in range(roomCount):
+	#	var x = rng.randi() % dungeonSize
+	#	var y = rng.randi() % dungeonSize
+	#	
+	#	var w = rng.randi_range(minRoomInitial, maxRoomInitial)
+	#	var h = rng.randi_range(minRoomInitial, maxRoomInitial)
+	#	
+	#	createRoom(x, y, w, h, tileMap)
+	
+	# skapar rum
+	for i in range(roomCount):
+		var x = rng.randi() % initialSize
+		var y = rng.randi() % initialSize
+		
+		var w = rng.randfn(roomMean, roomStdev)
+		var h = rng.randfn(roomMean, roomStdev)
+		
+		rooms.append( dungeonRoom.new(x, y, w, h) )
+		
+	# förflyttar rum utåt tills inga längre kolliderar
+	for r in range(roomCount):
+		
+		pass
 	
 func createRoom(x, y, w, h, trg):
 	# skapa väggar
@@ -62,9 +104,9 @@ func createCorridor(x, y, d, l, trg):
 		pass
 	elif d == 1: # U
 		for i in range(l):
-			trg.set_cell(x-1, y+i, 1) # övre vägg
-			trg.set_cell(x+1, y+i, 1) # nedre vägg
-			trg.set_cell(x  , y,   0) # golv
+			trg.set_cell(x-1, y-i, 1) # vänster vägg
+			trg.set_cell(x+1, y-i, 1) # höger vägg
+			trg.set_cell(x  , y-i, 0) # golv
 	elif d == 2: # V
 		for i in range(l):
 			trg.set_cell(x+i, y-1, 1) # övre vägg
