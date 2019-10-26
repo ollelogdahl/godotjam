@@ -5,6 +5,7 @@ extends Node2D
 # var b = "text"
 
 onready var dungeonTilesetRes = preload("res://ResourceObjects/dungeonTileset.tres")
+onready var enemySpawner = preload("res://Scenes/enemySpawner.tscn")
 var dungeonRoom = preload("res://Scripts/dungeonRoomClass.gd")
 onready var parent = get_parent()
 
@@ -55,6 +56,8 @@ func generate():
 	createCorridor(19, 12, 0, 2, tileMap)
 	createCorridor(4, 16, 1, 7, tileMap)
 	createCorridor(15, 18, 0, 6, tileMap)
+	
+	createMonsters(tileMap)
 
 #	var rooms = generateRoomSizes() # genererar tight packade rum
 #	roomSeparation(rooms) # sprider ut rummen
@@ -94,6 +97,13 @@ func createCorridor(x, y, d, l, trg):
 			trg.set_cell(x-1, y-i, 1) # vänster vägg
 			trg.set_cell(x+1, y-i, 1) # höger vägg
 			trg.set_cell(x  , y-i, 0) # golv
+func createMonsters(trg):
+	for cell in trg.get_used_cells():
+		if trg.get_cellv(cell) == 0 and rng.randf() > 0.95:
+			var spawner = enemySpawner.instance()
+			spawner.name = "enemySpawner %s" % cell
+			spawner.position = cell * 8
+			trg.add_child(spawner)
 
 func createMST(rooms):
 	# ta reda på minimala spännande träd 
@@ -195,21 +205,6 @@ func gravity(rooms):
 			if not collided:
 				rooms[i].x -= (x_diff)  * 0.1
 				rooms[i].y -= (y_diff)  * 0.1 
-			
-			
-			#collided = false
-			#rooms[i].y -= (y_diff)  * 0.1 
-			
-			#for j in range(roomCount):
-			#	if i == j:
-			#		continue
-			#		
-			#	if rooms[i].collidesWith(rooms[j]):
-			#		collided = true
-			#		break				
-			
-			#if collided:
-			#	rooms[i].y -= (y_diff)  * -0.1 
 
 func generateRoomSizes():
 	var rooms = []
