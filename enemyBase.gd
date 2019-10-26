@@ -19,11 +19,13 @@ onready var world = $"/root/Node/world"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	$AnimationPlayer.play("Walk")
+	$Sprite.scale= Vector2(1,1)
 	player1 = world.getPlayer1()
 	player2 = world.getPlayer2()
 	
 	_on_Timer_timeout()
 	set_process(false)
+	pass # Replace with function body.
 
 func _process(delta):
 	var nextPos = path[0]
@@ -48,3 +50,15 @@ func _on_Timer_timeout():
 
 	path = nav.get_simple_path(self.global_position, target.global_position)
 	set_path(path)
+	
+
+
+func take_damage(damage):
+	print("hit")
+	health -= damage
+	
+	if health <= 0:
+		$AnimationPlayer.play("Death")
+
+func death():
+	queue_free()

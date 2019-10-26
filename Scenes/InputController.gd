@@ -65,6 +65,7 @@ func _unhandled_input(event):
 				players[player_id].down_pressed = true
 			else:
 				players[player_id].down_pressed = false		
+		
 	
 	elif event is InputEventKey:
 		if event.scancode == KEY_W:
@@ -109,7 +110,11 @@ func _unhandled_input(event):
 				players[1].right_pressed = true
 			else:
 				players[1].right_pressed = false
-
+		elif event.scancode == KEY_F and event.is_pressed():
+			players[0].primary_attack()
+		elif event.scancode == KEY_K and event.is_pressed():
+			players[1].primary_attack()
+			
 	
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
