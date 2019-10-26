@@ -29,7 +29,10 @@ func spawn_players(spawn):
 	player_1.player_controller_id = 0
 	player_2.player_controller_id = 1
 
-	
+func getPlayer1():
+	return player_1
+func getPlayer2():
+	return player_2
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
