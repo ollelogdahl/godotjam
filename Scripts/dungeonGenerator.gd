@@ -26,9 +26,10 @@ func get_player_spawn():
 # generate() wrapper
 func generateDungeon():
 	print("Generating dungeon:")
-	var tileMap = generate()
+	var tileMap = generate(765754)
 	print("Dungeon done.")
 	return tileMap
+	
 
 # Genererar hela dungeonen
 func generate(s = -1):
