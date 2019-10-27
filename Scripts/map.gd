@@ -1,12 +1,9 @@
 extends Node
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+onready var world = $'..'
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	connect("STAIRS_UP", self, "_on_ascend")
 	#$dungeonGenerator.generate()
 	pass # Replace with function body.
 
@@ -22,6 +19,5 @@ func generateDungeon():
 #	pass
 
 func ascend():
-	print("player hit stairs")
-	
-	$dungeonGenerator.generate()
+	print("players ascending..")
+	world.init_floor()

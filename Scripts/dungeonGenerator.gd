@@ -11,12 +11,9 @@ onready var navigation2D = $'/root/Node/world/Navigation2D'
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
-var steps = 5
-var iterations = 300
+var steps = 15
 var roomMean = 11
 var roomStdev = 2.2
-var initialSize = 10
-var spreadFactor = 0.1
 
 var rng = RandomNumberGenerator.new()
 var path = AStar.new()
@@ -25,15 +22,19 @@ var player_spawn = Vector2()
 func get_player_spawn():
 	return player_spawn
 
+# generate() wrapper
+func generateDungeon():
+	print("Generating dungeon:")
+	generate()
+	print("Dungeon done.")
+
 
 # Genererar hela dungeonen
 func generate():
-	print("Generating dungeon:")
-	
 	# generera seed
 	rng.randomize()
 	var mapSeed = rng.randi()
-	#rng.seed = mapSeed
+	rng.seed = mapSeed
 	
 	# Skapa en ny node(TileMap) för denna dungeon
 	var tileMap = TileMap.new()
@@ -78,12 +79,10 @@ func generate():
 	$roomPopulator.createStairRoom(roomStairIndex)
 	
 	# välj vilket rum nyckeln ska finnas i
-	var keyRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 2)
+	var keyRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 4)
 	$roomPopulator.addKey(keyRoomIndex, 0)
 	
 	print(tileMap.name + " > elements added.")
-	
-	print("Dungeon done.")
 
 func buildDebugDungeon(tileMap):
 	createRoom(0, 0, 10, 10, tileMap)
