@@ -11,8 +11,8 @@ onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
 var steps := 14
-var roomMean := 14
-var roomStdev := 2.4
+var roomMean := 16
+var roomStdev := 2.8
 
 var mapSeed := -1
 
@@ -85,12 +85,22 @@ func generate(s = -1):
 	var roomStairIndex = len($dungeonLayout.rooms) -1
 	$roomPopulator.createStairRoom(roomStairIndex)
 	
+	# lägg till event rum
+	var eventRoomIndex := 1
+	for r in range(len($dungeonLayout.rooms)-2):
+		if r == len($dungeonLayout.rooms)-2:
+			break # detta är stairRoom
+		if $dungeonLayout.rooms[r+1].size() > $dungeonLayout.rooms[eventRoomIndex].size():
+			eventRoomIndex = r+1
+	#if(rng.randf() > 0.5):
+	$roomPopulator.createCrystalRoom(eventRoomIndex)
+	
 	# välj vilket rum nyckeln ska finnas i
 	var keyRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 4)
 	$roomPopulator.addKey(keyRoomIndex, 0)
 	
 	# slumpar om en shrine ska finnas
-	if(rng.randf() > 0.5):
+	if(rng.randf() > 0.7):
 		var valid = false
 		var shrineRoomIndex = 0
 		while not valid:

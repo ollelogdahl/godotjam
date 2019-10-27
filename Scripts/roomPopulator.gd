@@ -20,6 +20,12 @@ func createStairRoom(index):
 	addStairs(tile)
 	addDoor(stairRoomCorridor, 0)
 	addFloorFeature(tile.x-1, tile.y-1, 3, 3, 3)
+func createCrystalRoom(index):
+	var room = rooms[index]
+	
+	var tile = selectCenterTileInRoom(room)
+	addFloorFeature(tile.x-2, tile.y-2, 4, 4, 4)
+	addCrystal(tile)
 
 func addStairs(tile):
 	# välj en tile i rummet
@@ -59,6 +65,11 @@ func addDoor(corridor, id):
 	door.name = "door_" + str(id)
 	
 	tileMap.add_child(door)
+func addCrystal(tile):
+	var crystal = preload("res://Scenes/crystal.tscn").instance()
+	crystal.position = tile * 8
+	
+	world.add_child(crystal)
 
 func addFloorFeature(x,y, w,h, id): 
 	if w > 1 and h > 1:
@@ -67,6 +78,11 @@ func addFloorFeature(x,y, w,h, id):
 				if tileMap.get_cell(x+i, y+j) == 0:
 					tileMap.set_cell(x+i, y+j, id)
 
+func selectCenterTileInRoom(room):
+	var x : int = room.x + (room.w/2) + 1
+	var y : int = room.y + (room.h/2) + 1
+	
+	return Vector2(x, y)
 func selectFloorTileInRoom(room, offset=0):
 	var tile
 	var valid = false
