@@ -18,5 +18,22 @@ func collidesWith(r):
 		return true
 	return false
 
+func contains(v):
+	if v.x > x and v.x < x + w and v.y > y and v.y < y + h:
+		return true
+	return false
+
 func vec3():
 	return Vector3(x, y, 0)
+	
+class dungeonCorridor:
+	var x
+	var y
+	var dir
+	var length
+	
+	func __init(x, y, d, l):
+		self.x = x
+		self.y = y
+		self.dir = d
+		self.length = l
