@@ -14,7 +14,7 @@ var tilemap : TileMap
 var navigation2d
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	navigation2d = get_node("WorldViewport/Viewport/world/Navigation2D")
+	navigation2d = get_node("WorldViewport/Viewport/world")
 	minimapViewport.world_2d = worldViewport.world_2d
 	pass # Replace with function body.
 
