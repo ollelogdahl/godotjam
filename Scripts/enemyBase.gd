@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 var health = 20
-var speed = 25
+var speed := 25
 
 var walkAnim = "Walk"
 var attackAnim = "Attack"
@@ -25,6 +25,8 @@ func _ready():
 	$Sprite.scale= Vector2(1,1)
 	player1 = world.getPlayer1()
 	player2 = world.getPlayer2()
+	
+	$Timer.wait_time = randf() * 0.2
 	
 	set_process(false)
 	calculatePath()
@@ -67,7 +69,7 @@ func withinAttackRange():
 		return true
 	return false
 func withinAwareRange():
-	if target.global_position.distance_to(self.global_position) < 256:
+	if target.global_position.distance_to(self.global_position) < 128:
 		return true
 	return false
 func isTargetSeen():
@@ -97,6 +99,8 @@ func calculatePath():
 	set_path(path)
 
 func _on_Timer_timeout():
+	if not $Timer.wait_time == 0.2:
+		$Timer.wait_time = 0.2
 	calculatePath()
 	pass
 

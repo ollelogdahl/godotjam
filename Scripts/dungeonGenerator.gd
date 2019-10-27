@@ -10,9 +10,9 @@ onready var navigation2D = $'../'
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
-var steps := 8
-var roomMean := 11
-var roomStdev := 2.2
+var steps := 14
+var roomMean := 13
+var roomStdev := 2.4
 
 var mapSeed := -1
 
@@ -26,7 +26,7 @@ func get_player_spawn():
 # generate() wrapper
 func generateDungeon():
 	print("Generating dungeon:")
-	var tileMap = generate(765754)
+	var tileMap = generate()
 	print("Dungeon done.")
 	return tileMap
 	
