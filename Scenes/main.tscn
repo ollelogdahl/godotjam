@@ -40,8 +40,6 @@ script = ExtResource( 3 )
 
 [node name="Player2" parent="WorldViewport/Viewport/world" instance=ExtResource( 5 )]
 
-[node name="Projectiles" type="Node" parent="WorldViewport/Viewport/world"]
-
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0

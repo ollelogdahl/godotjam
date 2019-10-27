@@ -15,7 +15,7 @@ var player1
 var player2
 
 var pathTrg
-var targetSeen
+var hasAI := true
 
 onready var world = $"../../"
 
@@ -31,25 +31,54 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
+	if hasAI:
+		# player seen
+		var targetSeen = isTargetSeen()
+		var withinAwareRange = withinAwareRange()
+		var withinAttackRange = withinAttackRange()
+	
+		if withinAwareRange and not withinAttackRange: # nära, men inte attacknära
+			$AnimationPlayer.play("Walk")
+			walk(delta)
+		elif withinAttackRange and not targetSeen: # attacknära, men runt hörnet (gå)
+			$AnimationPlayer.play("Walk")
+			walk(delta)
+		elif withinAttackRange: # attacknära och ser spelaren
+			$AnimationPlayer.play("Attack")
+			attack()
+		elif not withinAwareRange: # för långt bort
+			$AnimationPlayer.play("Idle")
+
+func walk(delta):
 	if pathTrg < len(path):
 		var nextPos = path[pathTrg]
 		var movement = nextPos - position
-		
-		# player seen
-		targetSeen = false
-		$RayCast2D.cast_to = target.position - position
-		if $RayCast2D.is_colliding():
-			var col = $RayCast2D.get_collider()
-			if col.get_instance_id() == target.get_instance_id():
-				targetSeen = true
-			
-		
-		if target.global_position.distance_to(self.global_position) > 32 or not targetSeen:
-			move_and_slide(movement.normalized() * speed * delta * 100)
+	
+		move_and_slide(movement.normalized() * speed * delta * 100)
 	
 		if(position == path[0]):
 			path.remove(0)
-			pathTrg += 1
+			pathTrg+= 1
+func attack():
+	pass
+
+func withinAttackRange():
+	if target.global_position.distance_to(self.global_position) < 32:
+		return true
+	return false
+func withinAwareRange():
+	if target.global_position.distance_to(self.global_position) < 256:
+		return true
+	return false
+func isTargetSeen():
+	$RayCast2D.cast_to = target.position - position
+	if $RayCast2D.is_colliding():
+		var col = $RayCast2D.get_collider()
+		if not col is KinematicBody2D:
+			return false
+		if col.get_instance_id() == target.get_instance_id():
+			return true
+	return false
 
 func set_path(val : PoolVector2Array) -> void:
 	path = val
@@ -57,7 +86,6 @@ func set_path(val : PoolVector2Array) -> void:
 		set_process(false)
 	else:
 		set_process(true)
-
 func calculatePath():
 	if player1.global_position.distance_squared_to(self.global_position) < player2.global_position.distance_squared_to(self.global_position):
 		target = player1
@@ -71,14 +99,12 @@ func calculatePath():
 func _on_Timer_timeout():
 	calculatePath()
 	pass
-	
-
 
 func take_damage(damage):
 	health -= damage
 	
 	if health <= 0:
+		hasAI = false
 		$AnimationPlayer.play("Death")
-
 func death():
 	queue_free()
