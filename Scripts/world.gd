@@ -26,6 +26,7 @@ func _ready():
 func initFloor():
 	currentTileMap = mapGenerator.generateDungeon()
 	spawn_players(mapGenerator.get_player_spawn())
+	get_node("/root/Node").dungeon_is_created()
 
 func spawn_players(spawn):
 	player_1.position = spawn + Vector2(4, 4)
