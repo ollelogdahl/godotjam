@@ -40,12 +40,21 @@ func set_minimap():
 	print(rect)
 	print(rect.position)
 	print(rect.end)
-	print(rect.size)
+	print(rect.size.x * 8)
+	print(rect.size.y * 8)
+	
+	var zoom
+	if rect.size.x > rect.size.y:
+		zoom = (rect.size.x * 8)/minimapViewport.size.x
+	else:
+		zoom = (rect.size.y * 8)/minimapViewport.size.y
 	
 	var camera_x = (rect.position.x *8  + rect.end.x *8 ) /2
 	var camera_y = (rect.position.y *8 + rect.end.y *8) /2
 	
+	print(zoom)
 	minimapCamera.position= Vector2(camera_x,camera_y)
+	minimapCamera.zoom = Vector2(zoom,zoom)
 	print(minimapCamera.position)
 	#minimapCamera.zoom.x = 10
 	#.zoom.y = 10
