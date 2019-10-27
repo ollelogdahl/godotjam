@@ -112,10 +112,16 @@ func _unhandled_input(event):
 				players[1].right_pressed = false
 		elif event.scancode == KEY_F and event.is_pressed():
 			players[0].primary_attack()
-		elif event.scancode == KEY_K and event.is_pressed():
+		elif event.scancode == KEY_G and event.is_pressed():
+			players[0].secondary_attack()
+		elif event.scancode == KEY_H and event.is_pressed():
+			players[0].third_attack()
+		elif event.scancode == KEY_J and event.is_pressed():
 			players[1].primary_attack()
-			
-	
+		elif event.scancode == KEY_K and event.is_pressed():
+			players[1].secondary_attack()
+		elif event.scancode == KEY_L and event.is_pressed():
+			players[0].third_attack()	
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

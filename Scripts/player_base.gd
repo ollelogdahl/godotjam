@@ -15,8 +15,15 @@ var player_controller_id
 var player_speed = 60
 
 var melee_collision
+
+var fireball_dir = Vector2(1,0)
+
+var projectiles_node
+
+var fireball_scene = preload("res://Scenes/Fireball.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	projectiles_node = get_node("../Projectiles")
 	melee_collision = $Melee_Attack/CollisionShape2D
 	melee_collision.disabled = true
 	pass # Replace with function body.
@@ -26,6 +33,7 @@ func _process(delta):
 	var dir = get_input()
 	
 	if dir != Vector2(0,0):
+		fireball_dir = dir
 		$Melee_Attack.rotation = dir.angle()
 		move_and_slide(dir * player_speed)
 
@@ -45,11 +53,21 @@ func get_input():
 	return motion_dir.normalized()
 
 func primary_attack():
-	print("primary attack")
 	$AnimationPlayer.play("attack")
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+
+func secondary_attack():
+	$AnimationPlayer.play("ranged_attack")
+
+
+func spawn_fireball():
+	var fireball_node = fireball_scene.instance()
+	fireball_node.set_damage(10)
+	fireball_node.position = self.global_position
+	fireball_node.set_direction(fireball_dir)
+	projectiles_node.add_child(fireball_node)
+	
+func third_attack():
+	pass
 
 
 

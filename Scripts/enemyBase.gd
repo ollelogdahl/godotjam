@@ -7,6 +7,7 @@ var walkAnim = "Walk"
 var attackAnim = "Attack"
 var deathAnim = "Death"
 
+var pointing_dir = Vector2()
 var target
 var path := PoolVector2Array() setget set_path
 
@@ -31,6 +32,7 @@ func _process(delta):
 	var nextPos = path[0]
 	var movement = nextPos - position
 	
+	pointing_dir = movement.angle()
 	move_and_slide(movement.normalized() * speed)
 	
 	if(position == path[0]):
@@ -54,7 +56,6 @@ func _on_Timer_timeout():
 
 
 func take_damage(damage):
-	print("hit")
 	health -= damage
 	
 	if health <= 0:

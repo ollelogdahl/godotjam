@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/world.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/PlayerScene.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/shrine.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=6]
 
 [node name="Node" type="Node"]
 
@@ -27,8 +28,13 @@ script = ExtResource( 2 )
 
 [node name="Navigation2D" type="Navigation2D" parent="world"]
 
+[node name="Projectiles" type="Node" parent="world"]
+
+[node name="shrine" parent="world" instance=ExtResource( 5 )]
+position = Vector2( 43.8907, 52.994 )
+
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="InputController" parent="." instance=ExtResource( 5 )]
+[node name="InputController" parent="." instance=ExtResource( 6 )]
