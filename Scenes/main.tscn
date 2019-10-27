@@ -50,8 +50,10 @@ margin_bottom = 40.0
 world_node_path = NodePath("../WorldViewport/Viewport/world")
 
 [node name="minimap" type="ViewportContainer" parent="."]
-margin_right = 10.0
-margin_bottom = 10.0
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 310.0
+margin_bottom = 310.0
 
 [node name="Viewport" type="Viewport" parent="minimap"]
 size = Vector2( 200, 200 )

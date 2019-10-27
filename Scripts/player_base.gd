@@ -4,7 +4,7 @@ extends KinematicBody2D
 # var a = 2
 # var b = "text"
 
-var primary_attack_damage = 5
+var primary_attack_damage = 10
 
 var left_pressed = false
 var right_pressed = false

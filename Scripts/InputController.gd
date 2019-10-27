@@ -66,7 +66,16 @@ func _unhandled_input(event):
 			if event.is_pressed():
 				players[player_id].down_pressed = true
 			else:
-				players[player_id].down_pressed = false		
+				players[player_id].down_pressed = false	
+		elif event.button_index == JOY_XBOX_A:
+			if event.is_pressed():
+				players[player_id].primary_attack()
+		elif event.button_index == JOY_XBOX_B:
+			if event.is_pressed():
+				players[player_id].secondary_attack()
+		elif event.button_index == JOY_XBOX_X:
+			if event.is_pressed():
+				players[player_id].third_attack()
 		
 	
 	elif event is InputEventKey:
