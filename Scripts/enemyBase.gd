@@ -109,8 +109,8 @@ func calculatePath():
 	set_path(path)
 
 func _on_Timer_timeout():
-	if not $Timer.wait_time == 0.2:
-		$Timer.wait_time = 0.2
+	if not $Timer.wait_time == 0.4:
+		$Timer.wait_time = 0.4
 	calculatePath()
 	pass
 
