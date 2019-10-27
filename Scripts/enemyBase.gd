@@ -24,19 +24,20 @@ func _ready():
 	player1 = world.getPlayer1()
 	player2 = world.getPlayer2()
 	
-	_on_Timer_timeout()
 	set_process(false)
+	_on_Timer_timeout()
 	pass # Replace with function body.
 
 func _process(delta):
-	var nextPos = path[0]
-	var movement = nextPos - position
+	#var nextPos = path[0]
+	#var movement = nextPos - position
+	#pointing_dir = movement.angle()
+	#move_and_slide(movement.normalized() * speed)
+
 	
-	pointing_dir = movement.angle()
-	move_and_slide(movement.normalized() * speed)
-	
-	if(position == path[0]):
-		path.remove(0)
+	#if(position == path[0]):
+	#	path.remove(0)
+	pass
 
 func set_path(val : PoolVector2Array) -> void:
 	path = val
