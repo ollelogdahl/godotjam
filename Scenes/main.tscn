@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/world.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/map.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/dungeonGenerator.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/PlayerScene.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=5]
 
@@ -14,18 +14,16 @@ zoom = Vector2( 0.5, 0.5 )
 smoothing_enabled = true
 script = ExtResource( 1 )
 
-[node name="world" type="Node2D" parent="."]
+[node name="world" type="Navigation2D" parent="."]
 script = ExtResource( 2 )
 
-[node name="generation" parent="world" instance=ExtResource( 3 )]
+[node name="dungeonGenerator" parent="world" instance=ExtResource( 3 )]
 
 [node name="enemies" type="Node" parent="world"]
 
 [node name="Player1" parent="world" instance=ExtResource( 4 )]
 
 [node name="Player2" parent="world" instance=ExtResource( 4 )]
-
-[node name="Navigation2D" type="Navigation2D" parent="world"]
 
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0

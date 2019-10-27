@@ -1,6 +1,6 @@
 extends Node
 
-onready var map = $'../..'
+onready var world = $'../..'
 
 var rooms
 var corridors
@@ -26,7 +26,7 @@ func addStairs(stairRoom):
 	
 	var stairs = preload("res://Scenes/stairs.tscn").instance()
 	stairs.position = tile * 8 + Vector2(4, 4)
-	map.add_child(stairs)
+	world.add_child(stairs)
 	
 func addKey(index, keyId):
 	var room = rooms[index]
@@ -37,7 +37,7 @@ func addKey(index, keyId):
 	key.tileMap = tileMap
 	key.position = tile * 8 + Vector2(4, 4)
 	
-	map.add_child(key)
+	world.add_child(key)
 	
 func addDoor(corridor, id):
 	var doorX = corridor.x * 8 + 4
