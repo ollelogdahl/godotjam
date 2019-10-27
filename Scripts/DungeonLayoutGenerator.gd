@@ -18,10 +18,11 @@ func buildDungeon(steps, roomMean, roomStdev, mapSeed, first = dungeonRoom.new(0
 	
 	# skapar det första rummet
 	rooms.append(first)
-	var lastValid := 0
 	var fails := 0
+	var lastValid := 0
 
-	for i in range(steps):
+	#for i in range(steps):
+	while len(rooms) < steps:
 		# roomsOrigin är det rummet korridoren ska byggas från
 		#    bygger från senast giltiga rum, men går bakåt ifall den misslyckas
 		var roomOrigin = rooms[max(lastValid - fails, 0)]
@@ -48,8 +49,9 @@ func buildDungeon(steps, roomMean, roomStdev, mapSeed, first = dungeonRoom.new(0
 		# validera det nya rummet ( OCH KORRIDOREN!! ;) )
 		corridors.append( corridor )
 		rooms.append( newRoom )
-		lastValid = i
-		
+		lastValid += 1
+		fails = 0
+
 func buildDungeonLinear(steps, roomMean, roomStdev, mapSeed, first = dungeonRoom.new(0, 0, 10, 10)) -> void:
 	rooms = []
 	corridors = []

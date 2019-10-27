@@ -7,6 +7,10 @@ var player_1
 var player_2
 var mapGenerator
 
+var currentTileMap = null
+var rememberedFloorSeeds = []
+var currentFloor = 0
+
 var spawn = Vector2(40,40)
 
 func _ready():
@@ -20,7 +24,7 @@ func _ready():
 	initFloor()
 
 func initFloor():
-	mapGenerator.generateDungeon()
+	currentTileMap = mapGenerator.generateDungeon()
 	spawn_players(mapGenerator.get_player_spawn())
 
 func spawn_players(spawn):
@@ -31,7 +35,18 @@ func spawn_players(spawn):
 
 func ascend():
 	print("players ascending...")
-	pass
+	
+	# spara senaste våningen
+	rememberedFloorSeeds.append(mapGenerator.mapSeed)
+	currentFloor += 1
+	
+	cleanWorld()
+	initFloor()
+
+func cleanWorld():
+	currentTileMap.free() # radera tilemap
+	for node in $enemies.get_children():
+		node.queue_free()
 
 func getPlayer1():
 	return player_1

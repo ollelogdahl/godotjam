@@ -10,9 +10,11 @@ onready var navigation2D = $'/root/Node/world'
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
-var steps = 15
-var roomMean = 11
-var roomStdev = 2.2
+var steps := 8
+var roomMean := 11
+var roomStdev := 2.2
+
+var mapSeed := -1
 
 var rng = RandomNumberGenerator.new()
 var path = AStar.new()
@@ -24,16 +26,21 @@ func get_player_spawn():
 # generate() wrapper
 func generateDungeon():
 	print("Generating dungeon:")
-	generate()
+	var tileMap = generate()
 	print("Dungeon done.")
-
+	return tileMap
 
 # Genererar hela dungeonen
-func generate():
+func generate(s = -1):
+	
 	# generera seed
-	rng.randomize()
-	var mapSeed = rng.randi()
-	rng.seed = mapSeed
+	if s != -1:
+		rng.seed = s
+		mapSeed = s
+	else:
+		rng.randomize()
+		mapSeed = rng.randi()
+		rng.seed = mapSeed
 	
 	# Skapa en ny node(TileMap) för denna dungeon
 	var tileMap = TileMap.new()
@@ -81,7 +88,19 @@ func generate():
 	var keyRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 4)
 	$roomPopulator.addKey(keyRoomIndex, 0)
 	
+	# slumpar om en shrine ska finnas
+	if(rng.randf() > 0.5):
+		var valid = false
+		var shrineRoomIndex = 0
+		while not valid:
+			shrineRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 4)
+			if not shrineRoomIndex == keyRoomIndex:
+				valid = true
+		$roomPopulator.addShrine(shrineRoomIndex)
+	
 	print(tileMap.name + " > elements added.")
+	
+	return tileMap
 
 func buildDebugDungeon(tileMap):
 	createRoom(0, 0, 10, 10, tileMap)

@@ -14,7 +14,10 @@ var path := PoolVector2Array() setget set_path
 var player1
 var player2
 
-onready var world = $"/root/Node/world"
+var pathTrg
+var targetSeen
+
+onready var world = $"../.."
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,34 +27,49 @@ func _ready():
 	player2 = world.getPlayer2()
 	
 	set_process(false)
-	_on_Timer_timeout()
+	calculatePath()
 	pass # Replace with function body.
 
 func _process(delta):
-	#var nextPos = path[0]
-	#var movement = nextPos - position
-	#pointing_dir = movement.angle()
-	#move_and_slide(movement.normalized() * speed)
-
+	if pathTrg < len(path):
+		var nextPos = path[pathTrg]
+		var movement = nextPos - position
+		
+		# player seen
+		targetSeen = false
+		$RayCast2D.cast_to = target.position - position
+		if $RayCast2D.is_colliding():
+			if $RayCast2D.get_collider().is_in_group("player"):
+				targetSeen = true
+			
+		
+		if target.global_position.distance_to(self.global_position) > 32 or not targetSeen:
+			move_and_slide(movement.normalized() * speed * delta * 100)
 	
-	#if(position == path[0]):
-	#	path.remove(0)
-	pass
+		if(position == path[0]):
+			path.remove(0)
+			pathTrg += 1
 
 func set_path(val : PoolVector2Array) -> void:
 	path = val
 	if val.size() == 0:
 		set_process(false)
-	set_process(true)
+	else:
+		set_process(true)
 
-func _on_Timer_timeout():
-	if player1.position.distance_to(self.position) < player2.position.distance_to(self.position):
+func calculatePath():
+	if player1.global_position.distance_squared_to(self.global_position) < player2.global_position.distance_squared_to(self.global_position):
 		target = player1
 	else:
 		target = player2
 
-	path = world.get_simple_path(self.global_position, target.global_position)
+	path = world.get_simple_path(self.global_position, target.global_position, false)
+	pathTrg = 0
 	set_path(path)
+
+func _on_Timer_timeout():
+	calculatePath()
+	pass
 	
 
 
