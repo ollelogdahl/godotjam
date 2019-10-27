@@ -32,14 +32,15 @@ func buildDungeon(steps, roomMean, roomStdev, mapSeed, first = dungeonRoom.new(0
 		var corridor = attachCorridorToOrigin(roomOrigin, edgeDirection)
 
 		# beräkna storlek på nytt rum
-		var newRoomWidth  = int(rng.randfn(roomMean, roomStdev))
-		var newRoomHeight = int(rng.randfn(newRoomWidth, roomStdev))
-	
+		var roomDimensions = generateRoomDimensions(roomMean, roomStdev)
+		var roomWidth  = int(roomDimensions.x)
+		var roomHeight = int(roomDimensions.y)
+		
 		# slumpa rummets förskjutning längst med korridoren
-		var v = attachRoomToCorridor(corridor, newRoomWidth, newRoomHeight)
+		var v = attachRoomToCorridor(corridor, roomWidth, roomHeight)
 
 		# testar om det nya rummet är godkänt, repetera annars!
-		newRoom = dungeonRoom.new(v.x, v.y, newRoomWidth, newRoomHeight)
+		newRoom = dungeonRoom.new(v.x, v.y, roomWidth, roomHeight)
 		if not roomIsValid(newRoom):
 			fails += 1
 			continue
@@ -78,14 +79,15 @@ func buildDungeonLinear(steps, roomMean, roomStdev, mapSeed, first = dungeonRoom
 			corridor = attachCorridorToOrigin(roomOrigin, edgeDirection)
 
 			# beräkna storlek på nytt rum
-			var newRoomWidth  = int(rng.randfn(roomMean, roomStdev))
-			var newRoomHeight = int(rng.randfn(newRoomWidth, roomStdev))
+			var roomDimensions = generateRoomDimensions(roomMean, roomStdev)
+			var roomWidth  = int(roomDimensions.x)
+			var roomHeight = int(roomDimensions.y)
 		
 			# slumpa rummets förskjutning längst med korridoren
-			var v = attachRoomToCorridor(corridor, newRoomWidth, newRoomHeight)
+			var v = attachRoomToCorridor(corridor, roomWidth, roomHeight)
 
 			# testar om det nya rummet är godkänt, repetera annars!
-			newRoom = dungeonRoom.new(v.x, v.y, newRoomWidth, newRoomHeight)
+			newRoom = dungeonRoom.new(v.x, v.y, roomWidth, roomHeight)
 			if roomIsValid(newRoom):
 				repeat = false
 			
@@ -140,6 +142,15 @@ func attachRoomToCorridor(c, width, height):
 			roomY = c.y + c.length-1
 			
 	return Vector2(roomX, roomY)
+
+func generateRoomDimensions(roomMean, roomStdev):
+	var width  = int(rng.randfn(roomMean, roomStdev))
+	var height = int(rng.randfn(width, roomStdev))
+	
+	width  = max(width,  4)
+	height = max(height, 4)
+	
+	return Vector2(width, height)
 
 # kollar ifall det går att placera ett rum här UTAN att överskrida något
 func roomIsValid(room):

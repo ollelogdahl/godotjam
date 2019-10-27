@@ -11,7 +11,7 @@ onready var navigation2D = $'/root/Node/world/Navigation2D'
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
-var steps = 25
+var steps = 5
 var iterations = 300
 var roomMean = 11
 var roomStdev = 2.2
@@ -33,7 +33,7 @@ func generate():
 	# generera seed
 	rng.randomize()
 	var mapSeed = rng.randi()
-	rng.seed = mapSeed
+	#rng.seed = mapSeed
 	
 	# Skapa en ny node(TileMap) för denna dungeon
 	var tileMap = TileMap.new()
@@ -50,16 +50,17 @@ func generate():
 	print(tileMap.name + " > init..")
 
 
-	# börja generera dungeon
-	
+	# Generera dungeon layout
 	$dungeonLayout.buildDungeon(steps, roomMean, roomStdev, mapSeed)
+	
+	
+
 	
 	print(tileMap.name + " > layout generated.")
 	
 	# fyller tilemapen med layoutens rum och korridorer
 	for room in $dungeonLayout.rooms:
 		createRoom(room.x, room.y, room.w, room.h, tileMap)
-		
 	for c in $dungeonLayout.corridors:
 		createCorridor(c.x, c.y, c.dir, c.length, tileMap)
 	
@@ -69,6 +70,18 @@ func generate():
 	createPlayerSpawns(16, 16, tileMap)
 	
 	print(tileMap.name + " > spawns added.")
+	
+	$roomPopulator.init($dungeonLayout.rooms, $dungeonLayout.corridors, tileMap)
+	
+	# lägg till trappa upp
+	var roomStairIndex = len($dungeonLayout.rooms) -1
+	$roomPopulator.createStairRoom(roomStairIndex)
+	
+	# välj vilket rum nyckeln ska finnas i
+	var keyRoomIndex = 2 + rng.randi() % (len($dungeonLayout.rooms) - 2)
+	$roomPopulator.addKey(keyRoomIndex, 0)
+	
+	print(tileMap.name + " > elements added.")
 	
 	print("Dungeon done.")
 
@@ -83,7 +96,6 @@ func buildDebugDungeon(tileMap):
 	createCorridor(19, 12, 0, 2, tileMap)
 	createCorridor(4, 16, 1, 7, tileMap)
 	createCorridor(15, 18, 0, 6, tileMap)
-
 	
 func createRoom(x, y, w, h, trg):
 	# skapa väggar

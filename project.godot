@@ -19,10 +19,6 @@ config/name="Gamejam Oct 2019"
 run/main_scene="res://Scenes/main.tscn"
 config/icon="res://icon.png"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "GodotTIE" )
-
 [rendering]
 
 environment/default_clear_color=Color( 0, 0, 0, 1 )

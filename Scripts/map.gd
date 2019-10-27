@@ -6,6 +6,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	connect("STAIRS_UP", self, "_on_ascend")
 	#$dungeonGenerator.generate()
 	pass # Replace with function body.
 
@@ -19,3 +20,8 @@ func generateDungeon():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass
+
+func ascend():
+	print("player hit stairs")
+	
+	$dungeonGenerator.generate()
