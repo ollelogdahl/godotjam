@@ -17,7 +17,7 @@ var player2
 var pathTrg
 var targetSeen
 
-onready var world = $"../.."
+onready var world = $"../../"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -39,7 +39,8 @@ func _process(delta):
 		targetSeen = false
 		$RayCast2D.cast_to = target.position - position
 		if $RayCast2D.is_colliding():
-			if $RayCast2D.get_collider().is_in_group("player"):
+			var col = $RayCast2D.get_collider()
+			if col.get_instance_id() == target.get_instance_id():
 				targetSeen = true
 			
 		

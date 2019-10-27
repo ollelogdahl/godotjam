@@ -1,8 +1,8 @@
 extends Camera2D
 
 
-onready var player1 = $"/root/Node/world/Player1"
-onready var player2 = $"/root/Node/world/Player2"
+onready var player1 = $"../world/Player1"
+onready var player2 = $"../world/Player2"
 
 # Declare member variables here. Examples:
 # var a = 2

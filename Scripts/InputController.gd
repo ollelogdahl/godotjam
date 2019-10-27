@@ -10,11 +10,13 @@ var devices_index = []
 var players = []
 var world_node
 
+export(NodePath) var world_node_path
+
 var player_scene = preload("res://Scenes/PlayerScene.tscn")
 
 func _ready():
 
-	world_node = get_node("../world")
+	world_node = get_node(world_node_path)
 	devices_index = Input.get_connected_joypads()
 	players = world_node.players 
 #	for i in range(len(devices_index)):
