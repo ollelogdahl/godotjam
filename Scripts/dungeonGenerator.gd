@@ -11,7 +11,7 @@ onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
 var steps := 14
-var roomMean := 13
+var roomMean := 14
 var roomStdev := 2.4
 
 var mapSeed := -1

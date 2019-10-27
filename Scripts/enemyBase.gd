@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+onready var projectileContainer = $'../../Projectiles'
+
 var health = 20
 var speed := 25
 
@@ -40,14 +42,15 @@ func _process(delta):
 		var withinAttackRange = withinAttackRange()
 	
 		if withinAwareRange and not withinAttackRange: # nära, men inte attacknära
-			$AnimationPlayer.play("Walk")
+			if not $AnimationPlayer.is_playing():
+				$AnimationPlayer.play("Walk")
 			walk(delta)
 		elif withinAttackRange and not targetSeen: # attacknära, men runt hörnet (gå)
-			$AnimationPlayer.play("Walk")
+			if not $AnimationPlayer.is_playing():
+				$AnimationPlayer.play("Walk")
 			walk(delta)
 		elif withinAttackRange: # attacknära och ser spelaren
 			$AnimationPlayer.play("Attack")
-			attack()
 		elif not withinAwareRange: # för långt bort
 			$AnimationPlayer.play("Idle")
 
@@ -62,7 +65,14 @@ func walk(delta):
 			path.remove(0)
 			pathTrg+= 1
 func attack():
-	pass
+	var fireball = preload("res://Scenes/Fireball_enemy.tscn").instance()
+	
+	fireball.set_damage(10)
+	fireball.fireballSpeed = 60
+	fireball.position = self.global_position
+	fireball.set_direction(-(position - target.position).normalized())
+	
+	projectileContainer.add_child(fireball)
 
 func withinAttackRange():
 	if target.global_position.distance_to(self.global_position) < 32:
