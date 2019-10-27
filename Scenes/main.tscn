@@ -58,4 +58,6 @@ handle_input_locally = false
 render_target_update_mode = 3
 
 [node name="Camera2D" type="Camera2D" parent="minimap/Viewport"]
+position = Vector2( 200, 50 )
+z_index = 0
 current = true
