@@ -44,14 +44,15 @@ script = ExtResource( 3 )
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="InputController" parent="UI" instance=ExtResource( 6 )]
-world_node_path = NodePath("../../WorldViewport/Viewport/world")
+[node name="InputController" parent="." instance=ExtResource( 6 )]
+world_node_path = NodePath("../WorldViewport/Viewport/world")
 
 [node name="minimap" type="ViewportContainer" parent="."]
 margin_left = 10.0
 margin_top = 10.0
 margin_right = 310.0
 margin_bottom = 310.0
+
 
 [node name="Viewport" type="Viewport" parent="minimap"]
 size = Vector2( 300, 300 )
@@ -61,5 +62,5 @@ render_target_update_mode = 3
 
 [node name="Camera2D" type="Camera2D" parent="minimap/Viewport"]
 position = Vector2( 200, 50 )
+z_index = 0
 current = true
-zoom = Vector2( 1.2, 1.2 )
