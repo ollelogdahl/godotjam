@@ -55,7 +55,6 @@ margin_top = 10.0
 margin_right = 310.0
 margin_bottom = 310.0
 
-
 [node name="Viewport" type="Viewport" parent="minimap"]
 size = Vector2( 200, 200 )
 transparent_bg = true
