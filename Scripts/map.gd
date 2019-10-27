@@ -4,6 +4,8 @@ extends Node
 # var a = 2
 # var b = "text"
 
+onready var root_node = get_node("/root/Node") 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#$dungeonGenerator.generate()
@@ -16,6 +18,8 @@ func _process(delta):
 
 func generateDungeon():
 	$dungeonGenerator.generate()
+	root_node.dungeon_is_created()
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
 #	pass

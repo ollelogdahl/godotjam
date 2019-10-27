@@ -14,8 +14,8 @@ var path := PoolVector2Array() setget set_path
 var player1
 var player2
 
-onready var nav = $"/root/Node/world/Navigation2D"
-onready var world = $"/root/Node/world"
+onready var nav = $"../../Navigation2D"
+onready var world = $"../../"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

@@ -6,7 +6,9 @@ extends Node
 
 onready var enemySpawner = preload("res://Scenes/enemySpawner.tscn")
 onready var parent = get_parent()
-onready var navigation2D = $'/root/Node/world/Navigation2D'
+export(NodePath) var node_path_navigation 
+
+onready var navigation2D = get_node("../../Navigation2D")
 
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")

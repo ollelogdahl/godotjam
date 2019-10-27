@@ -1,40 +1,61 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/world.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/map.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/PlayerScene.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scenes/shrine.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=7]
 
 [node name="Node" type="Node"]
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true
-zoom = Vector2( 0.5, 0.5 )
-smoothing_enabled = true
 script = ExtResource( 1 )
 
-[node name="world" type="Node2D" parent="."]
+[node name="WorldViewport" type="ViewportContainer" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+
+[node name="Viewport" type="Viewport" parent="WorldViewport"]
+size = Vector2( 1024, 600 )
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="world" type="Node2D" parent="WorldViewport/Viewport"]
 script = ExtResource( 2 )
 
-[node name="map" parent="world" instance=ExtResource( 3 )]
+[node name="map" parent="WorldViewport/Viewport/world" instance=ExtResource( 3 )]
 
-[node name="enemies" type="Node" parent="world"]
+[node name="enemies" type="Node" parent="WorldViewport/Viewport/world"]
 
-[node name="Player1" parent="world" instance=ExtResource( 4 )]
+[node name="Player1" parent="WorldViewport/Viewport/world" instance=ExtResource( 4 )]
 
-[node name="Player2" parent="world" instance=ExtResource( 4 )]
+[node name="Player2" parent="WorldViewport/Viewport/world" instance=ExtResource( 4 )]
 
-[node name="Navigation2D" type="Navigation2D" parent="world"]
+[node name="Navigation2D" type="Navigation2D" parent="WorldViewport/Viewport/world"]
 
-[node name="Projectiles" type="Node" parent="world"]
+[node name="Projectiles" type="Node" parent="WorldViewport/Viewport/world"]
 
-[node name="shrine" parent="world" instance=ExtResource( 5 )]
+[node name="shrine" parent="WorldViewport/Viewport/world" instance=ExtResource( 5 )]
 position = Vector2( 43.8907, 52.994 )
+
+[node name="Camera2D" type="Camera2D" parent="WorldViewport/Viewport"]
+current = true
+zoom = Vector2( 0.2, 0.2 )
+smoothing_enabled = true
+script = ExtResource( 6 )
 
 [node name="UI" type="Control" parent="."]
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="InputController" parent="." instance=ExtResource( 6 )]
+[node name="InputController" parent="." instance=ExtResource( 7 )]
+world_node_path = NodePath("../WorldViewport/Viewport/world")
+
+[node name="minimap" type="ViewportContainer" parent="."]
+margin_right = 500.0
+margin_bottom = 500.0
+
+[node name="Viewport" type="Viewport" parent="minimap"]
+size = Vector2( 300, 300 )
+handle_input_locally = false
+render_target_update_mode = 3
