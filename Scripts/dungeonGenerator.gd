@@ -3,6 +3,7 @@ extends Node
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+onready var root_node = $"/root/Node"
 
 onready var enemySpawner = preload("res://Scenes/enemySpawner.tscn")
 onready var navigation2D = $'../'
@@ -25,6 +26,7 @@ func get_player_spawn():
 # generate() wrapper
 func generateDungeon():
 	print("Generating dungeon:")
+	root_node.reset_elements()
 	var tileMap = generate()
 	print("Dungeon done.")
 	return tileMap
@@ -109,6 +111,7 @@ func generate(s = -1):
 		$roomPopulator.addShrine(shrineRoomIndex)
 	
 	print(tileMap.name + " > elements added.")
+	get_node("/root/Node").add_elements_to_minimap()
 	
 	return tileMap
 

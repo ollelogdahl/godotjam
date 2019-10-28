@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/minimapElements.gd" type="Script" id=1]
+[ext_resource path="res://Resources/minimap_players.png" type="Texture" id=2]
+[ext_resource path="res://Resources/key.png" type="Texture" id=3]
+[ext_resource path="res://Resources/shrine.png" type="Texture" id=4]
+[ext_resource path="res://Resources/crystal_minimap.png" type="Texture" id=5]
+[ext_resource path="res://Resources/stair_minimap.png" type="Texture" id=6]
+
+[node name="minimapElements" type="Node"]
+script = ExtResource( 1 )
+
+[node name="P1" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+z_index = 3
+texture = ExtResource( 2 )
+hframes = 2
+
+[node name="P2" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 2
+frame = 1
+
+[node name="Key" type="Sprite" parent="."]
+scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+
+[node name="Shrine" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 4 )
+hframes = 4
+
+[node name="Crystal" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 5 )
+
+[node name="Stair" type="Sprite" parent="."]
+scale = Vector2( 5, 5 )
+texture = ExtResource( 6 )

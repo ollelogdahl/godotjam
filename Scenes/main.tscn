@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/main.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Camera2D.gd" type="Script" id=2]
@@ -8,8 +8,7 @@
 [ext_resource path="res://Scenes/dialogBox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Score.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/updateMinimap.gd" type="Script" id=9]
-[ext_resource path="res://Resources/player_archer.png" type="Texture" id=10]
+[ext_resource path="res://Scenes/minimapElements.tscn" type="PackedScene" id=9]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
@@ -47,7 +46,6 @@ script = ExtResource( 3 )
 [node name="Projectiles" type="Node" parent="WorldViewport/Viewport/world"]
 
 [node name="UI" type="Control" parent="."]
-editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 
@@ -68,19 +66,8 @@ size = Vector2( 200, 200 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
-script = ExtResource( 9 )
 
 [node name="Camera2D" type="Camera2D" parent="minimap/Viewport"]
 current = true
 
-[node name="P1" type="Sprite" parent="minimap/Viewport"]
-modulate = Color( 0.658824, 0.34902, 0.34902, 1 )
-scale = Vector2( 10, 10 )
-z_index = 3
-texture = ExtResource( 10 )
-
-[node name="P2" type="Sprite" parent="minimap/Viewport"]
-modulate = Color( 0.572549, 0.803922, 0.376471, 1 )
-scale = Vector2( 8, 8 )
-z_index = 3
-texture = ExtResource( 10 )
+[node name="minimapElements" parent="minimap/Viewport" instance=ExtResource( 9 )]

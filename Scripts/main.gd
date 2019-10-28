@@ -7,9 +7,15 @@ onready var worldnode = $WorldViewport/Viewport/world
 onready var worldViewport = $WorldViewport/Viewport
 onready var minimapViewport = $minimap/Viewport
 onready var minimapCamera = $minimap/Viewport/Camera2D
+onready var minimapElements = $minimap/Viewport/minimapElements
 
 onready var player1 = $WorldViewport/Viewport/world/Player1
 onready var player2 = $WorldViewport/Viewport/world/Player2
+
+var key_pos
+var crystal_pos
+var stair_pos
+var shrine_pos
 
 
 var tilemap : TileMap
@@ -49,11 +55,6 @@ func dungeon_is_created():
 
 func set_minimap():
 	var rect = tilemap.get_used_rect()
-	print(rect)
-	print(rect.position)
-	print(rect.end)
-	print(rect.size.x * 8)
-	print(rect.size.y * 8)
 	
 	var zoom
 	
@@ -79,11 +80,9 @@ func set_minimap():
 	
 	
 	
-	print(zoom)
 	minimapCamera.position= Vector2(camera_x,camera_y)
 	minimapCamera.zoom = Vector2(zoom,zoom)
 	minimapCamera.offset = Vector2(camera_x_offset, camera_y_offset)
-	print(minimapCamera.position)
 	#minimapCamera.zoom.x = 10
 	#.zoom.y = 10
 	#minimapViewport.size = Vector2(300,300)
@@ -91,8 +90,17 @@ func set_minimap():
 	
 func _process(delta):
 	
-	minimapViewport.update_minimap(player1.position, player2.position)
-	
+	minimapElements.update_players_minimap(player1.position, player2.position)
+
+func add_elements_to_minimap():
+	if not minimapElements:
+		minimapElements = $minimap/Viewport/minimapElements
+	minimapElements.update_elements( key_pos,shrine_pos,crystal_pos, stair_pos)
+	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
-#	pass
+func reset_elements():
+	key_pos = null
+	crystal_pos = null
+	stair_pos = null
+	shrine_pos = null
