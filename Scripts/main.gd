@@ -92,7 +92,3 @@ func set_minimap():
 func _process(delta):
 	
 	minimapViewport.update_minimap(player1.position, player2.position)
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass

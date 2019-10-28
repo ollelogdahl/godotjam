@@ -6,7 +6,7 @@ var walkAnim = "Walk"
 var attackAnim = "Attack"
 
 func _ready():
-	speed = 20
+	speed = 5
 	health = 40
 	
 	$AnimationPlayer.play("Idle")
@@ -34,18 +34,14 @@ func _process(delta):
 
 		
 func attack():
-	#var fireball = preload("res://Scenes/Fireball_enemy.tscn").instance()
+	var projectile = preload("res://Scenes/shockWave_enemy.tscn").instance()
 	
-	#fireball.set_damage(10)
-	#fireball.fireballSpeed = 60
-	#fireball.position = self.global_position
-	#fireball.set_direction(-(position - target.position).normalized())
-	
-	#projectileContainer.add_child(fireball)
-	pass
+	projectile.position = self.global_position
+	projectile.direction = -(position - target.position).normalized()
+	projectileContainer.add_child(projectile)
 
 func withinAttackRange():
-	if target.global_position.distance_to(self.global_position) < 8:
+	if target.global_position.distance_to(self.global_position) < 14:
 		return true
 	return false
 

@@ -7,6 +7,8 @@ var awareRange = 128
 var target
 var path := PoolVector2Array() setget set_path
 
+var canWalk
+
 var player1
 var player2
 
@@ -22,8 +24,9 @@ func _ready():
 
 func walk(delta):
 	var nextPos = nextPathNode()
-	var movement = nextPos - position
-	velocity = movement.normalized() * speed * delta * 100
+	if canWalk:
+		var movement = nextPos - position
+		velocity = movement.normalized() * speed * delta * 100
 	
 func withinAwareRange():
 	if target.global_position.distance_to(self.global_position) < awareRange:
@@ -55,10 +58,13 @@ func calculatePath():
 	set_path(path)
 	
 func nextPathNode():
-	if(position.distance_to(path[0]) < 0.5):
-		path.remove(0)
 	if len(path) > 0:
-		return path[0]
+		if(position.distance_to(path[0]) < 0.5):
+			path.remove(0)
+		canWalk = true
+		if len(path) > 0:
+			return path[0]
+	canWalk = false
 	return null
 
 func _on_Timer_timeout():

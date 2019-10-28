@@ -1,4 +1,4 @@
-extends 'res:///Scripts/entity.gd'
+extends entity
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -23,22 +23,28 @@ var projectiles_node
 var fireball_scene = preload("res://Scenes/Fireball.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	health = 100
+	regainControl = 10
+	
 	projectiles_node = get_node("../Projectiles")
 	melee_collision = $Melee_Attack/CollisionShape2D
 	melee_collision.disabled = true
 	pass # Replace with function body.
 
 func _process(delta):	
-
-	var dir = get_input()
+	if underControl:
+		$Sprite.scale = Vector2(1, 1)
+		if velocity.length() <= 0.5:
+			$AnimationPlayer.play("Idle")
 	
-	if dir != Vector2(0,0):
-		fireball_dir = dir
-		$Melee_Attack.rotation = dir.angle()
-		velocity = dir * player_speed * delta * 35
-
-func test():
-	print("test")
+		var dir = get_input()
+	
+		if dir != Vector2(0,0):
+			fireball_dir = dir
+			$Melee_Attack.rotation = dir.angle()
+			velocity = dir * player_speed * delta * 35
+		
+			$AnimationPlayer.play("Move")
 func get_input():
 	var motion_dir = Vector2()
 	if right_pressed:
@@ -53,10 +59,12 @@ func get_input():
 	return motion_dir.normalized()
 
 func primary_attack():
-	$AnimationPlayer.play("attack")
+	$AnimationPlayer.stop(true)
+	$Melee_Attack/AnimationPlayer.play("Attack")
 
 func secondary_attack():
-	$AnimationPlayer.play("ranged_attack")
+	$AnimationPlayer.stop(true)
+	spawn_fireball()
 
 
 func spawn_fireball():
@@ -73,7 +81,7 @@ func third_attack():
 
 func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.takeDamage(primary_attack_damage, body.global_position - global_position)
+		body.takeDamage(primary_attack_damage, body.global_position - global_position, 1)
 	if body.is_in_group("player"):
 		if not body == self:
-			body.takeDamage(0, body.global_position - global_position)
+			body.takeDamage(0, body.global_position - global_position, 1.5)

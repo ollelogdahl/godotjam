@@ -25,10 +25,8 @@ func _on_Fireball_body_entered(body: PhysicsBody2D):
 		return
 		
 	if body.is_in_group("enemies"):
-		body.takeDamage(fireball_damage, direction)
+		body.takeDamage(fireball_damage, direction, 1)
 		queue_free()
-		
-	pass # Replace with function body.
 
 func set_direction(dir):
 	direction = dir

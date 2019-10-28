@@ -10,16 +10,11 @@ func _ready():
 
 func _process(delta):
 	position += (direction * fireballSpeed * delta)
-	pass
 
 
-func _on_Fireball_body_entered(body: PhysicsBody2D):
-	if not body:
-		queue_free()
-		return
-		
-	if body.is_in_group("players"):
-		body.take_damage(fireball_damage)
+func _on_Fireball_body_entered(body):
+	if body.is_in_group("player"):
+		body.takeDamage(0, direction, 0.4)
 		queue_free()
 
 func set_direction(dir):

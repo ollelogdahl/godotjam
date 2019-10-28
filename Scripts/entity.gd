@@ -7,6 +7,8 @@ var velocity : Vector2 = Vector2(0, 0)
 var underControl := true
 var alive := true
 
+var regainControl = 1
+
 var deathAnim = "Death"
 var takeDamageAnim = "TakeDamage"
 
@@ -14,21 +16,22 @@ func _process(delta):
 	move_and_slide(velocity * delta * 100)
 	
 	velocity *= 0.85 # drag
-	if velocity.length() <= 1:
+	if velocity.length() <= regainControl:
 		if alive:
 			underControl = true
 		velocity = Vector2(0, 0)
 
-func takeDamage(damage, attackDirection):
+func takeDamage(damage, attackDirection, fac):
 	health -= damage
 	underControl = false # tar av kontroll från AI/spelare
 	
-	velocity = attackDirection.normalized() * 90
+	velocity = attackDirection.normalized() * 90 * fac
 	if health <= 0:
 		death()
 		velocity *= 1.5 # dubbla fart ifall död
 		alive = false
 	else:
+		$AnimationPlayer.stop(true)
 		$AnimationPlayer.play(takeDamageAnim)
 
 func death():

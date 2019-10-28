@@ -39,7 +39,7 @@ func spawnEnemy(pos):
 	add_to_group("spawners")
 	var enemy
 	var rand = randf()
-	if rand > 0.8:
+	if rand > 0.1:
 		enemy = preload("res://Scenes/enemy_two.tscn").instance()
 	else:
 		enemy = preload("res://Scenes/enemy_pig.tscn").instance()
