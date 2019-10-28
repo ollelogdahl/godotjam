@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/dialogbox.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Cave-Story.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 2 )
+
+[node name="DialogBox" type="Polygon2D"]
+color = Color( 0.12549, 0.0980392, 0.0980392, 0.721569 )
+script = ExtResource( 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_fonts/normal_font = SubResource( 1 )
+
+[node name="WritingSpeed" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="deleteText" type="Timer" parent="."]
+wait_time = 3.0
+[connection signal="timeout" from="WritingSpeed" to="." method="_on_WritingSpeed_timeout"]
+[connection signal="timeout" from="deleteText" to="." method="_on_deleteText_timeout"]
