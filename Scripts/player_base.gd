@@ -26,7 +26,7 @@ var projectiles_node
 var fireball_scene = preload("res://Scenes/Fireball.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	health = 10000
+	health = 100
 	max_health = 100
 	regainControl = 10
 	
@@ -91,3 +91,12 @@ func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("player"):
 		if not body == self:
 			body.takeDamage(0, body.global_position - global_position, 1.5)
+
+func death():
+	# vöerlagra death()
+	$AnimationPlayer.play("Death")
+	alive = false
+	$'..'.playerDied(self)
+	
+	visible = false
+	position -= Vector2(100000, 100000)

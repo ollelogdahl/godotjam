@@ -17,6 +17,8 @@ var scoreFloorMultiplier := 1.5
 
 var spawn = Vector2(40,40)
 
+var diedPlayers = 0
+
 func _ready():
 	player_1 = $Player1
 	player_2 = $Player2
@@ -49,6 +51,13 @@ func spawnEnemy(pos):
 	enemy.position = pos + Vector2(4, 4)
 	enemy.add_to_group("enemies")
 	$enemies.add_child(enemy)
+
+func playerDied(s):
+	diedPlayers += 1
+	
+	if diedPlayers == 2:
+		# spelet över!!
+		endGame()
 
 func ascend():
 	print("players ascending...")
@@ -83,8 +92,28 @@ func cleanWorld():
 	currentTileMap.free() # radera tilemap
 	for node in $enemies.get_children():
 		node.queue_free()
+	
+	# ta bort shrine och kristal
+	var children = get_children()
+	for c in children:
+		if c.name == "shrine":
+			c.queue_free()
+		if c.name == "stairs":
+			c.queue_free()
+		if c.name == "crystal":
+			c.queue_free()
 
 func getPlayer1():
-	return player_1
+	if player_1:
+		return player_1
+	else:
+		return player_2
 func getPlayer2():
-	return player_2
+	if player_2:
+		return player_2
+	else:
+		return player_1
+
+
+func endGame():
+	pass
