@@ -57,3 +57,4 @@ anims/deactivated = SubResource( 3 )
 margin_right = 40.0
 margin_bottom = 40.0
 [connection signal="body_entered" from="." to="." method="_on_area_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_shrine_body_exited"]

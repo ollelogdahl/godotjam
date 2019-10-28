@@ -20,6 +20,6 @@ custom_fonts/normal_font = SubResource( 1 )
 wait_time = 0.05
 
 [node name="deleteText" type="Timer" parent="."]
-wait_time = 3.0
+wait_time = 4.0
 [connection signal="timeout" from="WritingSpeed" to="." method="_on_WritingSpeed_timeout"]
 [connection signal="timeout" from="deleteText" to="." method="_on_deleteText_timeout"]

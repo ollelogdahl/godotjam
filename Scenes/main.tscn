@@ -49,13 +49,12 @@ script = ExtResource( 3 )
 [node name="Projectiles" type="Node" parent="WorldViewport/Viewport/world"]
 
 [node name="UI" type="Control" parent="."]
-editor/display_folded = true
 margin_right = 40.0
 margin_bottom = 40.0
 script = ExtResource( 6 )
 
-[node name="Polygon2D" parent="UI" instance=ExtResource( 7 )]
-position = Vector2( 79.3898, 420.105 )
+[node name="Dialog_box" parent="UI" instance=ExtResource( 7 )]
+position = Vector2( 51.2724, 420.105 )
 
 [node name="Score" parent="UI" instance=ExtResource( 8 )]
 

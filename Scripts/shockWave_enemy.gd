@@ -3,7 +3,7 @@ extends Area2D
 var direction
 
 var speed = 180
-var damage = 0
+var damage = 5
 
 var vel
 

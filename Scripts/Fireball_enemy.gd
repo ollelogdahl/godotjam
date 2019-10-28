@@ -14,7 +14,7 @@ func _process(delta):
 
 func _on_Fireball_body_entered(body):
 	if body.is_in_group("player"):
-		body.takeDamage(0, direction, 0.4)
+		body.takeDamage(fireball_damage, direction, 0.4)
 		queue_free()
 
 func set_direction(dir):
