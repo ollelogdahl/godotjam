@@ -21,7 +21,6 @@ margin_right = 40.0
 margin_bottom = 40.0
 
 [node name="Viewport" type="Viewport" parent="WorldViewport"]
-editor/display_folded = true
 size = Vector2( 960, 540 )
 handle_input_locally = false
 render_target_update_mode = 3

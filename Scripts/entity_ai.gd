@@ -3,6 +3,8 @@ class_name entityAI
 
 var speed := 15
 
+var scoreOnDeath := 5
+
 var awareRange = 128
 var target
 var path := PoolVector2Array() setget set_path
@@ -72,3 +74,9 @@ func _on_Timer_timeout():
 		$Timer.wait_time = 0.4
 	calculatePath()
 	pass
+	
+func takeDamage(dmg,b,c):
+	if health - dmg <= 0:
+		world.addEnemyDeathScore(scoreOnDeath)
+	
+	.takeDamage(dmg,b,c)
