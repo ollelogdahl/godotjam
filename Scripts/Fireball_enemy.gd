@@ -3,7 +3,7 @@ extends Area2D
 var direction
 
 var fireballSpeed = 30
-var fireball_damage = 10
+var fireball_damage = 2
 
 func _ready():
 	$AnimationPlayer.play("burn")
@@ -13,6 +13,8 @@ func _process(delta):
 
 
 func _on_Fireball_body_entered(body):
+	if not body:
+		queue_free()
 	if body.is_in_group("player"):
 		body.takeDamage(fireball_damage, direction, 0.4)
 		queue_free()
