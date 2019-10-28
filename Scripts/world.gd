@@ -1,6 +1,7 @@
 extends Navigation2D
 
 
+onready var minimap_node = get_node("/root/Node/minimap/Viewport")
 
 var players = []
 var player_1

@@ -100,7 +100,10 @@ func nextPathNode():
 	if(position.distance_to(path[0]) < 0.5):
 		path.remove(0)
 	
-	return path[0]
+	if len(path) != 0:
+		return path[0]
+	else:
+		return null
 
 func _on_Timer_timeout():
 	if not $Timer.wait_time == 0.4:

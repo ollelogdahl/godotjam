@@ -8,6 +8,9 @@ onready var worldViewport = $WorldViewport/Viewport
 onready var minimapViewport = $minimap/Viewport
 onready var minimapCamera = $minimap/Viewport/Camera2D
 
+onready var player1 = $WorldViewport/Viewport/world/Player1
+onready var player2 = $WorldViewport/Viewport/world/Player2
+
 
 var tilemap : TileMap
 #onready var navigation2d : Navigation2D = $WorldViewport/Viewport/world/Navigation2D
@@ -15,7 +18,7 @@ var world_nav_node
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	world_nav_node = get_node("WorldViewport/Viewport/world")
-	minimapViewport.world_2d = worldViewport.world_2d
+	#minimapViewport.world_2d = worldViewport.world_2d
 	minimapViewport.size = Vector2(300,300)
 	pass # Replace with function body.
 
@@ -28,10 +31,20 @@ func dungeon_is_created():
 		minimapViewport = get_node("minimap/Viewport")
 	if not worldViewport:
 		worldViewport = get_node("WorldViewport/Viewport")
-	var tilemaps = world_nav_node.currentTileMap
+	tilemap = world_nav_node.currentTileMap
 	
-	minimapViewport.world_2d = worldViewport.world_2d
-	tilemap = tilemaps
+	var curr_tilemap : TileMap = TileMap.new()
+	curr_tilemap.name = "minimap_tilemap"
+	curr_tilemap.cell_size = Vector2(8, 8)
+	curr_tilemap.tile_set = preload("res://ResourceObjects/dungeonTileset.tres")
+	for cell in tilemap.get_used_cells():
+		var cell_tile = tilemap.get_cell(cell.x, cell.y)
+		curr_tilemap.set_cell(cell.x , cell.y, cell_tile)
+	curr_tilemap.position = tilemap.position
+	minimapViewport.add_child(curr_tilemap)
+	
+	#minimapViewport.world_2d = worldViewport.world_2d
+
 	set_minimap()
 
 func set_minimap():
@@ -76,7 +89,9 @@ func set_minimap():
 	#minimapViewport.size = Vector2(300,300)
 	
 	
+func _process(delta):
 	
+	minimapViewport.update_minimap(player1.position, player2.position)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
