@@ -75,4 +75,5 @@ func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("enemies"):
 		body.takeDamage(primary_attack_damage, body.global_position - global_position)
 	if body.is_in_group("player"):
-		body.takeDamage(0, body.global_position - global_position)
+		if not body == self:
+			body.takeDamage(0, body.global_position - global_position)

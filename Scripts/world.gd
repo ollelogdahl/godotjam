@@ -34,6 +34,18 @@ func spawn_players(spawn):
 	player_1.player_controller_id = 0
 	player_2.player_controller_id = 1
 
+func spawnEnemy(pos):
+	add_to_group("spawners")
+	var enemy
+	var rand = randf()
+	if rand > 0.8:
+		enemy = preload("res://Scenes/enemy_two.tscn").instance()
+	else:
+		enemy = preload("res://Scenes/enemy_pig.tscn").instance()
+	enemy.position = pos + Vector2(4, 4)
+	enemy.add_to_group("enemies")
+	$enemies.add_child(enemy)
+
 func ascend():
 	print("players ascending...")
 	

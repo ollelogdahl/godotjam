@@ -8,9 +8,20 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "entity",
+"language": "GDScript",
+"path": "res://Scripts/entity.gd"
+}, {
+"base": "entity",
+"class": "entityAI",
+"language": "GDScript",
+"path": "res://Scripts/entity_ai.gd"
+} ]
 _global_script_class_icons={
-
+"entity": "",
+"entityAI": ""
 }
 
 [application]

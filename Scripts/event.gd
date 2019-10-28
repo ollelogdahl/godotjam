@@ -2,7 +2,7 @@ extends Node
 
 onready var world = $'../'
 
-var enemiesKilled := 0
+var enemiesSpawned := 0
 var room = null
 
 var corners = []
@@ -23,7 +23,5 @@ func _process(delta):
 func _on_Timer_timeout():
 	# spawna ny fiende
 	var c = randi() % 4
-	
-	var spawner = preload('res://Scenes/enemySpawner.tscn').instance()
-	spawner.position = corners[c] * 8
-	world.add_child(spawner)
+	world.spawnEnemy(corners[c] * 8)
+	enemiesSpawned += 1
