@@ -1,6 +1,7 @@
 extends Node
 
 onready var world = $'../..'
+onready var root_Node = $"/root/Node"
 
 var rooms
 var corridors
@@ -36,6 +37,7 @@ func addStairs(tile):
 	
 	var stairs = preload("res://Scenes/stairs.tscn").instance()
 	stairs.position = tile * 8 + Vector2(4, 4)
+	root_Node.stair_pos = stairs.position
 	world.add_child(stairs)
 func addKey(index, keyId):
 	var room = rooms[index]
@@ -45,7 +47,7 @@ func addKey(index, keyId):
 	key.id = keyId
 	key.tileMap = tileMap
 	key.position = tile * 8 + Vector2(4, 4)
-	
+	root_Node.key_pos = key.position
 	world.add_child(key)
 func addShrine(roomIndex):
 	
@@ -55,7 +57,7 @@ func addShrine(roomIndex):
 	var tile = selectTileInRoom(room, 1)
 	
 	shrine.position = tile * 8
-	
+	root_Node.shrine_pos = shrine.position
 	world.add_child(shrine)
 func addDoor(corridor, id):
 	var doorX = corridor.x * 8 + 4
@@ -71,7 +73,7 @@ func addDoor(corridor, id):
 func addCrystal(tile):
 	var crystal = preload("res://Scenes/crystal.tscn").instance()
 	crystal.position = tile * 8
-	
+	root_Node.crystal_pos = crystal.position
 	world.add_child(crystal)
 
 func addFloorFeature(x,y, w,h, id): 

@@ -8,7 +8,11 @@
 [ext_resource path="res://Scenes/dialogBox.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/Score.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/InputManager.tscn" type="PackedScene" id=8]
+<<<<<<< HEAD
 [ext_resource path="res://Scripts/updateMinimap.gd" type="Script" id=9]
+=======
+[ext_resource path="res://Scenes/minimapElements.tscn" type="PackedScene" id=9]
+>>>>>>> 2f2b04d33f01100d438b1ed511ff7205168cf3ad
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
@@ -67,11 +71,8 @@ size = Vector2( 200, 200 )
 transparent_bg = true
 handle_input_locally = false
 render_target_update_mode = 3
-script = ExtResource( 9 )
 
 [node name="Camera2D" type="Camera2D" parent="minimap/Viewport"]
 current = true
 
-[node name="P1" type="Sprite" parent="minimap/Viewport"]
-
-[node name="P2" type="Sprite" parent="minimap/Viewport"]
+[node name="minimapElements" parent="minimap/Viewport" instance=ExtResource( 9 )]
