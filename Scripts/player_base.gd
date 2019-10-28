@@ -3,6 +3,9 @@ extends entity
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
+var at_shrine = false
+
+onready var UI_node = $"/root/Node/UI"
 
 var primary_attack_damage = 10
 
@@ -23,7 +26,8 @@ var projectiles_node
 var fireball_scene = preload("res://Scenes/Fireball.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	health = 100
+	health = 10000
+	max_health = 100
 	regainControl = 10
 	
 	projectiles_node = get_node("../Projectiles")
@@ -77,7 +81,9 @@ func spawn_fireball():
 func third_attack():
 	pass
 
-
+func takeDamage(damage, attackDirection, fac):
+	UI_node.update_healthbar(health, max_health, self.name)
+	.takeDamage(damage,attackDirection,fac)
 
 func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("enemies"):
