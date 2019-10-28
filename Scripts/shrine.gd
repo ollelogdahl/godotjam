@@ -32,6 +32,7 @@ func set_text():
 
 func _on_area_body_entered(body):
 	if body.is_in_group("player"):
+		
 		print("at shrine")
 		set_text()
 	pass # Replace with function body.
