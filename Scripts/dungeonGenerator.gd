@@ -5,8 +5,7 @@ extends Node
 # var b = "text"
 onready var root_node = $"/root/Node"
 
-onready var enemySpawner = preload("res://Scenes/enemySpawner.tscn")
-onready var navigation2D = $'../'
+onready var world = $'../'
 
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
@@ -54,7 +53,7 @@ func generate(s = -1):
 	
 	# lägger till den som node under navigation2D
 	#    detta krävs för pathfindingen
-	navigation2D.add_child(tileMap)
+	world.add_child(tileMap)
 	
 	print(tileMap.name + " > init..")
 
@@ -167,10 +166,7 @@ func createCorridor(x, y, d, l, trg):
 func createMonsters(trg):
 	for cell in trg.get_used_cells():
 		if trg.get_cellv(cell) == 0 and rng.randf() > 0.99:
-			var spawner = enemySpawner.instance()
-			spawner.name = "enemySpawner %s" % cell
-			spawner.position = cell * 8
-			trg.add_child(spawner)
+			world.spawnEnemy(cell * 8)
 func createPlayerSpawns(x1, y1, trg):
 	var spawn1 = Node2D.new()
 	

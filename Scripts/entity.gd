@@ -1,4 +1,5 @@
 extends KinematicBody2D
+class_name entity
 
 var health := 20
 var velocity : Vector2 = Vector2(0, 0)

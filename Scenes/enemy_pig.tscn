@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://Scripts/enemyBase.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/enemy_pig.gd" type="Script" id=1]
 [ext_resource path="res://Resources/enemy_pig.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
@@ -76,7 +76,7 @@ tracks/2/keys = {
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.721569, 0.117647, 0.117647, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
-[sub_resource type="Animation" id=7]
+[sub_resource type="Animation" id=4]
 resource_name = "Idle"
 length = 2.0
 tracks/0/type = "value"
@@ -92,9 +92,8 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=4]
-resource_name = "TakeDamage"
-length = 0.2
+[sub_resource type="Animation" id=5]
+length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -114,7 +113,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1.2, 0.8 ), Vector2( 1, 1 ) ]
@@ -126,13 +125,13 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2 ),
+"times": PoolRealArray( 0, 0.1, 0.3 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ), Color( 0.721569, 0.117647, 0.117647, 1 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 0.5
 step = 0.25
 tracks/0/type = "value"
@@ -148,9 +147,9 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=7]
 
-[node name="Enemy" type="KinematicBody2D"]
+[node name="enemy_pig" type="KinematicBody2D"]
 z_index = 10
 script = ExtResource( 1 )
 
@@ -165,10 +164,10 @@ frame = 2
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Attack = SubResource( 2 )
 anims/Death = SubResource( 3 )
-anims/Idle = SubResource( 7 )
-anims/TakeDamage = SubResource( 4 )
-anims/Walk = SubResource( 5 )
-anims/jump_back = SubResource( 6 )
+anims/Idle = SubResource( 4 )
+anims/TakeDamage = SubResource( 5 )
+anims/Walk = SubResource( 6 )
+anims/jump_back = SubResource( 7 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.5
