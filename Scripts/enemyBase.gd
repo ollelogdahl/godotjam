@@ -1,23 +1,17 @@
-extends KinematicBody2D
+extends 'res:///Scripts/entity.gd'
 
 onready var projectileContainer = $'../../Projectiles'
 
-var health = 20
-var speed := 25
+var speed := 15
 
 var walkAnim = "Walk"
 var attackAnim = "Attack"
-var deathAnim = "Death"
 
-var pointing_dir = Vector2()
 var target
 var path := PoolVector2Array() setget set_path
 
 var player1
 var player2
-
-var pathTrg
-var hasAI := true
 
 onready var world = $"../../"
 
@@ -28,14 +22,13 @@ func _ready():
 	player1 = world.getPlayer1()
 	player2 = world.getPlayer2()
 	
-	$Timer.wait_time = randf() * 0.2
-	
+	$Timer.wait_time = randf() * 0.4
 	set_process(false)
 	calculatePath()
 	pass # Replace with function body.
 
 func _process(delta):
-	if hasAI:
+	if underControl:
 		# player seen
 		var targetSeen = isTargetSeen()
 		var withinAwareRange = withinAwareRange()
@@ -55,15 +48,11 @@ func _process(delta):
 			$AnimationPlayer.play("Idle")
 
 func walk(delta):
-	if pathTrg < len(path):
-		var nextPos = path[pathTrg]
-		var movement = nextPos - position
+	var nextPos = nextPathNode()
+	var movement = nextPos - position
+	velocity = movement.normalized() * speed * delta * 100
 	
-		move_and_slide(movement.normalized() * speed * delta * 100)
-	
-		if(position == path[0]):
-			path.remove(0)
-			pathTrg+= 1
+		
 func attack():
 	var fireball = preload("res://Scenes/Fireball_enemy.tscn").instance()
 	
@@ -105,8 +94,13 @@ func calculatePath():
 		target = player2
 
 	path = world.get_simple_path(self.global_position, target.global_position, false)
-	pathTrg = 0
 	set_path(path)
+	
+func nextPathNode():
+	if(position.distance_to(path[0]) < 0.5):
+		path.remove(0)
+	
+	return path[0]
 
 func _on_Timer_timeout():
 	if not $Timer.wait_time == 0.4:
@@ -114,11 +108,5 @@ func _on_Timer_timeout():
 	calculatePath()
 	pass
 
-func take_damage(damage):
-	health -= damage
-	
-	if health <= 0:
-		hasAI = false
-		$AnimationPlayer.play("Death")
-func death():
+func deleteSelf():
 	queue_free()

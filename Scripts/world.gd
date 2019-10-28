@@ -44,6 +44,16 @@ func ascend():
 	cleanWorld()
 	initFloor()
 
+# triggra event när spelaren går in i eventRummet
+func event(r):
+	# påbörja event!!
+	print("Event initiated...")
+	
+	# skapa en ny node som tar hand om eventet
+	var e = preload("res://Scenes/event.tscn").instance()
+	e.room = r
+	add_child(e)
+
 func cleanWorld():
 	currentTileMap.free() # radera tilemap
 	for node in $enemies.get_children():

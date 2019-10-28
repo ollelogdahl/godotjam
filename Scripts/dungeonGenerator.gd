@@ -10,14 +10,13 @@ onready var navigation2D = $'../'
 onready var dungeonRoom = preload("res://Scripts/Classes/dungeonRoomClass.gd")
 onready var dungeonCorridor = preload("res://Scripts/Classes/dungeonCorridorClass.gd")
 
-var steps := 14
-var roomMean := 16
+var steps := 12
+var roomMean := 14
 var roomStdev := 2.8
 
 var mapSeed := -1
 
 var rng = RandomNumberGenerator.new()
-var path = AStar.new()
 
 var player_spawn = Vector2()
 func get_player_spawn():

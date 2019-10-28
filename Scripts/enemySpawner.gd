@@ -1,6 +1,6 @@
 extends Node2D
 
-onready var world = $'../../'
+onready var world = $'/root/Node/WorldViewport/Viewport/world/'
 
 onready var enemyScene = preload("res://Scenes/enemy.tscn")
 

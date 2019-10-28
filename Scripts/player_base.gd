@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends 'res:///Scripts/entity.gd'
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -35,7 +35,7 @@ func _process(delta):
 	if dir != Vector2(0,0):
 		fireball_dir = dir
 		$Melee_Attack.rotation = dir.angle()
-		move_and_slide(dir * player_speed)
+		velocity = dir * player_speed * delta * 35
 
 func test():
 	print("test")
@@ -73,4 +73,6 @@ func third_attack():
 
 func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.take_damage(primary_attack_damage)
+		body.takeDamage(primary_attack_damage, body.global_position - global_position)
+	if body.is_in_group("player"):
+		body.takeDamage(0, body.global_position - global_position)

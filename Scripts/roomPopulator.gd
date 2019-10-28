@@ -26,6 +26,9 @@ func createCrystalRoom(index):
 	var tile = selectCenterTileInRoom(room)
 	addFloorFeature(tile.x-2, tile.y-2, 4, 4, 4)
 	addCrystal(tile)
+	
+	# skapa roomNotifyer och bind signal till world.event()
+	addNotifier(room, 'BEGIN_EVENT', 'event')
 
 func addStairs(tile):
 	# välj en tile i rummet
@@ -77,6 +80,17 @@ func addFloorFeature(x,y, w,h, id):
 			for i in range(w):
 				if tileMap.get_cell(x+i, y+j) == 0:
 					tileMap.set_cell(x+i, y+j, id)
+
+func addNotifier(room, sig, callback):
+	var notifier = preload('res://Scenes/roomNotifier.tscn').instance()
+	notifier.position = Vector2(room.x + float(room.w/2), room.y + float(room.h/2)) * 8 + Vector2(4, 4)
+	
+	var shape = RectangleShape2D.new()
+	shape.extents = Vector2(room.w/2, room.h/2) * 8
+	notifier.get_node('CollisionShape2D').shape = shape
+	notifier.room = room
+	notifier.connect(sig, world, callback)
+	tileMap.add_child(notifier)
 
 func selectCenterTileInRoom(room):
 	var x : int = room.x + (room.w/2) + 1

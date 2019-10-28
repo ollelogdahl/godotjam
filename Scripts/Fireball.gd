@@ -5,7 +5,7 @@ extends Area2D
 # var b = "text"
 var direction
 
-var fireballSpeed = 30
+var fireballSpeed = 90
 var fireball_damage = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -25,7 +25,7 @@ func _on_Fireball_body_entered(body: PhysicsBody2D):
 		return
 		
 	if body.is_in_group("enemies"):
-		body.take_damage(fireball_damage)
+		body.takeDamage(fireball_damage, direction)
 		queue_free()
 		
 	pass # Replace with function body.
