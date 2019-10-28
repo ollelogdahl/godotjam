@@ -4,8 +4,10 @@ extends entity
 # var a = 2
 # var b = "text"
 var at_shrine = false
+var curced_sword_active = true
 
 onready var UI_node = $"/root/Node/UI"
+onready var curced_sword_timer = $CurcedSwordTimer
 
 var primary_attack_damage = 10
 
@@ -26,7 +28,7 @@ var projectiles_node
 var fireball_scene = preload("res://Scenes/Fireball.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	health = 10000
+	health = 100
 	max_health = 100
 	regainControl = 10
 	
@@ -46,6 +48,7 @@ func _process(delta):
 		if dir != Vector2(0,0):
 			fireball_dir = dir
 			$Melee_Attack.rotation = dir.angle()
+			$curcedattack2d.rotation = dir.angle()
 			velocity = dir * player_speed * delta * 35
 		
 			$AnimationPlayer.play("Move")
@@ -64,7 +67,10 @@ func get_input():
 
 func primary_attack():
 	$AnimationPlayer.stop(true)
-	$Melee_Attack/AnimationPlayer.play("Attack")
+	if curced_sword_active:
+		$curcedattack2d/Curced_Attack/AnimationPlayer.play("curced_attack")
+	else:
+		$Melee_Attack/AnimationPlayer.play("Attack")
 
 func secondary_attack():
 	$AnimationPlayer.stop(true)
@@ -79,6 +85,9 @@ func spawn_fireball():
 	projectiles_node.add_child(fireball_node)
 	
 func third_attack():
+	if not curced_sword_active:
+		curced_sword_active = true
+		curced_sword_timer.start()
 	pass
 
 func takeDamage(damage, attackDirection, fac):
@@ -91,3 +100,7 @@ func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("player"):
 		if not body == self:
 			body.takeDamage(0, body.global_position - global_position, 1.5)
+
+func _on_CurcedSwordTimer_timeout():
+	curced_sword_active = false
+	pass # Replace with function body.
