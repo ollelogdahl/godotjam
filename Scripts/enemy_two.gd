@@ -8,6 +8,9 @@ var attackAnim = "Attack"
 func _ready():
 	speed = 5
 	health = 40
+	awareRange = 100
+	
+	scoreOnDeath = 15
 	
 	$AnimationPlayer.play("Idle")
 	$Sprite.scale= Vector2(1,1)

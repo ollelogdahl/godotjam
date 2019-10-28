@@ -12,6 +12,9 @@ var currentTileMap = null
 var rememberedFloorSeeds = []
 var currentFloor = 0
 
+var score := 0
+var scoreFloorMultiplier := 1.5
+
 var spawn = Vector2(40,40)
 
 func _ready():
@@ -39,7 +42,7 @@ func spawnEnemy(pos):
 	add_to_group("spawners")
 	var enemy
 	var rand = randf()
-	if rand > 0.1:
+	if rand > 0.7:
 		enemy = preload("res://Scenes/enemy_two.tscn").instance()
 	else:
 		enemy = preload("res://Scenes/enemy_pig.tscn").instance()
@@ -56,6 +59,15 @@ func ascend():
 	
 	cleanWorld()
 	initFloor()
+
+func addEnemyDeathScore(amount):
+	var floorMult = max(scoreFloorMultiplier * currentFloor, 1)
+	addScore(amount * floorMult)
+
+func addScore(amount):
+	score += amount
+	var scoreLabel = $'/root/Node/UI/Score'
+	scoreLabel.update_score(score)
 
 # triggra event när spelaren går in i eventRummet
 func event(r):
