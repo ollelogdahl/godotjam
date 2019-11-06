@@ -14,6 +14,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var c = (player1.position + player2.position) / 2
-	position = c
+	if player1.visible == true and player2.visible == true:
+		var c = (player1.position + player2.position) / 2
+		position = c
+	elif player1.visible:
+		position = player1.position
+	elif player2.visible:
+		position = player2.position
 	pass

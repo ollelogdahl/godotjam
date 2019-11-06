@@ -7,6 +7,7 @@ var players = []
 var player_1
 var player_2
 var mapGenerator
+var crystal_event_activated = false
 
 var currentTileMap = null
 var rememberedFloorSeeds = []
@@ -14,6 +15,7 @@ var currentFloor = 0
 
 var score := 0
 var scoreFloorMultiplier := 1.5
+var crystal_event_multiplier = 3
 
 var spawn = Vector2(40,40)
 
@@ -71,6 +73,8 @@ func ascend():
 
 func addEnemyDeathScore(amount):
 	var floorMult = max(scoreFloorMultiplier * currentFloor, 1)
+	if crystal_event_activated:
+		floorMult *= crystal_event_multiplier
 	addScore(amount * floorMult)
 
 func addScore(amount):

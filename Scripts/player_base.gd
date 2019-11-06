@@ -4,12 +4,14 @@ extends entity
 # var a = 2
 # var b = "text"
 var at_shrine = false
-var curced_sword_active = true
+var curced_sword_active = false
 
 onready var UI_node = $"/root/Node/UI"
 onready var curced_sword_timer = $CurcedSwordTimer
+onready var root_node = $"/root/Node"
 
-var primary_attack_damage = 10
+var normal_attack_damage = 10
+var curced_attack_damage = 20
 
 var left_pressed = false
 var right_pressed = false
@@ -48,8 +50,9 @@ func _process(delta):
 		if dir != Vector2(0,0):
 			fireball_dir = dir
 			$Melee_Attack.rotation = dir.angle()
+			
 			$curcedattack2d.rotation = dir.angle()
-			velocity = dir * player_speed * delta * 35
+			velocity = dir * player_speed * 1
 		
 			$AnimationPlayer.play("Move")
 func get_input():
@@ -85,10 +88,13 @@ func spawn_fireball():
 	projectiles_node.add_child(fireball_node)
 	
 func third_attack():
-	if not curced_sword_active:
-		curced_sword_active = true
-		curced_sword_timer.start()
-	pass
+	if at_shrine:
+		if not curced_sword_active:
+			curced_sword_active = true
+			curced_sword_timer.start()
+			health = 0.9 * health
+			UI_node.update_healthbar(health, max_health, self.name)
+		
 
 func takeDamage(damage, attackDirection, fac):
 	UI_node.update_healthbar(health, max_health, self.name)
@@ -96,7 +102,7 @@ func takeDamage(damage, attackDirection, fac):
 
 func _on_Melee_Attack_body_entered(body):
 	if body.is_in_group("enemies"):
-		body.takeDamage(primary_attack_damage, body.global_position - global_position, 1)
+		body.takeDamage(normal_attack_damage, body.global_position - global_position, 1)
 	if body.is_in_group("player"):
 		if not body == self:
 			body.takeDamage(0, body.global_position - global_position, 1.5)
@@ -109,9 +115,21 @@ func death():
 	$'..'.playerDied(self)
 	
 	visible = false
-	position -= Vector2(100000, 100000)
+	position -= Vector2(10000, 10000)
+	UI_node.update_healthbar(0, max_health, self.name)
+	root_node.player_died(self)
+	
 
 func _on_CurcedSwordTimer_timeout():
 	curced_sword_active = false
 	pass # Replace with function body.
 
+
+
+func _on_Curced_Attack_body_entered(body):
+	if body.is_in_group("enemies"):
+		body.takeDamage(curced_attack_damage, body.global_position - global_position, 1)
+	if body.is_in_group("player"):
+		if not body == self:
+			body.takeDamage(0, body.global_position - global_position, 1.5)
+	pass # Replace with function body.

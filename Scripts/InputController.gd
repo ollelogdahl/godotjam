@@ -73,7 +73,7 @@ func _unhandled_input(event):
 		elif event.button_index == JOY_XBOX_B:
 			if event.is_pressed():
 				players[player_id].secondary_attack()
-		elif event.button_index == JOY_XBOX_X:
+		elif event.button_index == JOY_XBOX_Y:
 			if event.is_pressed():
 				players[player_id].third_attack()
 		

@@ -3,7 +3,8 @@ extends Node
 var scores
 
 func _ready():
-	submit("", 8)
+	#submit("Valoffa", 82)
+	pass
 
 
 func submit(guestName, score):

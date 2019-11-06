@@ -6,7 +6,7 @@ var walkAnim = "Walk"
 var attackAnim = "Attack"
 
 func _ready():
-	speed = 5
+	speed = 9
 	health = 40
 	awareRange = 100
 	

@@ -27,8 +27,12 @@ _global_script_class_icons={
 [application]
 
 config/name="Gamejam Oct 2019"
-run/main_scene="res://Scenes/main.tscn"
+run/main_scene="res://Scenes/Menu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+global="*res://Scripts/global.gd"
 
 [display]
 

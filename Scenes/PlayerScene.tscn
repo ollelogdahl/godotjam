@@ -214,6 +214,7 @@ anims/Attack = SubResource( 7 )
 [node name="Timer" type="Timer" parent="."]
 
 [node name="CurcedSwordTimer" type="Timer" parent="."]
+wait_time = 60.0
 one_shot = true
 
 [node name="curcedattack2d" type="Node2D" parent="."]
@@ -237,3 +238,4 @@ disabled = true
 anims/curced_attack = SubResource( 9 )
 [connection signal="body_entered" from="Melee_Attack" to="." method="_on_Melee_Attack_body_entered"]
 [connection signal="timeout" from="CurcedSwordTimer" to="." method="_on_CurcedSwordTimer_timeout"]
+[connection signal="body_entered" from="curcedattack2d/Curced_Attack" to="." method="_on_Curced_Attack_body_entered"]

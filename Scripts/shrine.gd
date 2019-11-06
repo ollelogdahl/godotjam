@@ -7,6 +7,7 @@ onready var dialog_box_node = $"/root/Node/UI/Dialog_box"
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$AnimationPlayer.play("deactivated")
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -16,6 +17,7 @@ func _ready():
 
 func _on_area_body_entered(body):
 	if body.is_in_group("player"):
+		$AnimationPlayer.play("activated")
 		dialog_box_node.shrine_message()
 		body.at_shrine = true
 		print("at shrine")

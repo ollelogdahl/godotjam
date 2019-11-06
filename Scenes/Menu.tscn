@@ -1,21 +1,23 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scripts/mainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Resources/enemy_pig_alone.png" type="Texture" id=2]
-[ext_resource path="res://Resources/crystal_minimap.png" type="Texture" id=3]
-[ext_resource path="res://Scripts/scoreLoader.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/scoreLoader.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/scorePublisher.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/global.gd" type="Script" id=5]
+[ext_resource path="res://Resources/Montserrat-Regular.ttf" type="DynamicFontData" id=6]
+
+[sub_resource type="DynamicFont" id=1]
+size = 29
+font_data = ExtResource( 6 )
 
 [node name="mainMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 
-[node name="Panel" type="Panel" parent="."]
-visible = false
-margin_right = 90.0
-margin_bottom = 40.0
-
 [node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( -3.21606, 0 )
 color = Color( 0.462745, 0.396078, 0.396078, 1 )
 polygon = PoolVector2Array( 0, 0, 960, 0, 960, 540, 0, 540 )
 
@@ -29,28 +31,34 @@ rect_scale = Vector2( 15, 15 )
 texture = ExtResource( 2 )
 
 [node name="TextureRect2" type="TextureRect" parent="."]
-margin_left = 446.568
-margin_top = 350.639
-margin_right = 454.568
-margin_bottom = 358.639
+margin_left = 464.463
+margin_top = 380.113
+margin_right = 472.463
+margin_bottom = 388.113
 rect_rotation = 13.3826
 rect_scale = Vector2( 15, 15 )
 texture = ExtResource( 2 )
 
-[node name="TextureButton" type="TextureButton" parent="."]
-margin_left = 394.0
-margin_top = 198.597
-margin_right = 543.0
-margin_bottom = 334.597
-texture_normal = ExtResource( 3 )
-expand = true
-stretch_mode = 5
+[node name="Panel" type="Panel" parent="."]
+modulate = Color( 0.435294, 0.223529, 0.223529, 1 )
+margin_left = 396.071
+margin_top = 262.49
+margin_right = 543.071
+margin_bottom = 327.49
 
-[node name="RichTextLabel" type="RichTextLabel" parent="TextureButton"]
-margin_left = 46.5247
-margin_top = 18.0929
-margin_right = 130.525
-margin_bottom = 52.0929
+[node name="Button" type="Button" parent="Panel"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = 0.929199
+margin_top = -0.490204
+margin_right = 148.929
+margin_bottom = 64.5098
+text = "Start"
+
+[node name="Label" type="Label" parent="Panel"]
+margin_left = 53.0
+margin_top = 24.0
+margin_right = 93.0
+margin_bottom = 38.0
 text = "START"
 
 [node name="Scoreboard" type="Control" parent="."]
@@ -59,21 +67,20 @@ margin_left = 6.0
 margin_top = 9.0
 margin_right = -565.0
 margin_bottom = 526.0
-script = ExtResource( 4 )
+script = ExtResource( 3 )
 
 [node name="Names" type="RichTextLabel" parent="Scoreboard"]
 margin_left = 4.0
 margin_top = 7.0
 margin_right = 148.0
 margin_bottom = 523.0
-text = "OLLE : 1"
+hint_tooltip = "Team name"
 
 [node name="Scores" type="RichTextLabel" parent="Scoreboard"]
 margin_left = 162.661
 margin_top = 7.0
 margin_right = 301.661
 margin_bottom = 523.0
-text = "OLLE : 1"
 
 [node name="HTTPRequest" type="HTTPRequest" parent="Scoreboard"]
 
@@ -83,5 +90,37 @@ margin_top = 345.953
 margin_right = 561.861
 margin_bottom = 375.953
 hint_tooltip = "Enter name"
-[connection signal="pressed" from="TextureButton" to="." method="_on_TextureButton_pressed"]
+
+[node name="scorePublisher" parent="." instance=ExtResource( 4 )]
+
+[node name="badUsername" type="Label" parent="."]
+margin_left = 578.0
+margin_top = 353.0
+margin_right = 618.0
+margin_bottom = 367.0
+
+[node name="GlobalSingelton" type="Node" parent="."]
+script = ExtResource( 5 )
+
+[node name="wait_to_update" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Label" type="Label" parent="."]
+margin_left = 231.684
+margin_top = 355.789
+margin_right = 374.684
+margin_bottom = 369.789
+text = "Team name: (optional)"
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 358.0
+margin_top = 99.0
+margin_right = 800.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 1 )
+text = "Gauntlet's Revenge by Valoffa"
+[connection signal="pressed" from="Panel/Button" to="." method="_on_Button_pressed"]
 [connection signal="request_completed" from="Scoreboard/HTTPRequest" to="Scoreboard" method="_on_HTTPRequest_request_completed"]
+[connection signal="focus_entered" from="NameField" to="." method="_on_NameField_focus_entered"]
+[connection signal="timeout" from="wait_to_update" to="." method="_on_wait_to_update_timeout"]

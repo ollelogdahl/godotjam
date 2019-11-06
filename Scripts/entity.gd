@@ -14,9 +14,9 @@ var deathAnim = "Death"
 var takeDamageAnim = "TakeDamage"
 
 func _process(delta):
-	move_and_slide(velocity * delta * 100)
+	move_and_slide(velocity * 1)
 	
-	velocity *= 0.85 # drag
+	velocity *= 0.65 # drag
 	if velocity.length() <= regainControl:
 		if alive:
 			underControl = true

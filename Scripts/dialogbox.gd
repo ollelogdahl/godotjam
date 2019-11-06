@@ -2,8 +2,8 @@ extends Polygon2D
 
 var dialog_running = false
 #var welcome_dialog = ["Welcome traveler", ", good luck finding treasures and exploring the dungeons ahead.", " Attack with A, B and X and remember to brag about your high scoore"]
-var whole_welcome_dialog = "Welcome traveler, good luck finding treasures and exploring the dungeons ahead. Attack with A, B and activate things with X. Remember to brag about your high scoore!"
-var shrine_dialog = "Do you want to trade 10% of your health to obtain a sacred sword?"
+var whole_welcome_dialog = "Welcome traveler, good luck finding treasures and exploring the dungeons ahead. Attack with A, B and activate things with Y. Remember to brag about your high scoore!"
+var shrine_dialog = "Do you want to trade 10% of your health to obtain a sacred sword? You will have the sword for one minute."
 var sentance = 0
 var vector_array : PoolVector2Array
 

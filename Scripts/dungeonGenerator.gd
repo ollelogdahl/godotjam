@@ -30,7 +30,9 @@ func generateDungeon():
 	print("Dungeon done.")
 	return tileMap
 	
-
+# 3412135123
+#3230097303 <- lagging AI
+#863820525 <- fungerar bättre med AI
 # Genererar hela dungeonen
 func generate(s = -1):
 	
